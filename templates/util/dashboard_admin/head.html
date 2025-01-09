@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <!-- Custom Stylesheet -->
+    <link href="{% static 'admin/css/style.css' %}" rel="stylesheet">
+
+</head>
+<style>
+
+    .progress {
+      list-style: none;
+      display: flex;
+      padding: 0;
+      margin: 0;
+    }
+    .progress li {
+      text-align: center;
+      position: relative;
+      flex: 1;
+    }
+    .progress li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -50%;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 4px;
+      background: #ccc;
+      z-index: -1;
+    }
+    .progress li.completed::after {
+      background: #4CAF50;
+    }
+    .progress li .circle {
+      width: 30px;
+      height: 30px;
+      background: #ccc;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin: 0 auto;
+      font-weight: bold;
+    }
+    .progress li.completed .circle {
+      background: #4CAF50;
+    }
+    .progress li .label {
+      margin-top: 8px;
+    }
+  </style>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div class="brand-logo">
+                <a href="{% url 'admins:admin_index' %}">
+                    <b class="logo-abbr"><img src="{% static 'admin/images/logo.png' %}" alt=""> 
+                    </b>
+                    <span class="logo-compact"><img src="{% static 'admin/images/logo-compact.png' %}" alt=""></span>
+                    <span class="brand-title">
+                        <img src="{% static 'admin/images/logo-text.png' %}" alt="">
+                    </span>
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">    
+            <div class="header-content clearfix">
+                
+                <div class="nav-control">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                </div>
+                <div class="header-left">
+                    
+                </div>
+                <div class="header-right">
+                    <ul class="clearfix">
+                                                               
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="{% static 'admin/images/user/1.png' %}" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile   dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>    
+                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+
+
+
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">           
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                     <li>
+                        <a href="{% url 'admins:admin_create' %}"  aria-expanded="false">
+                            <i class="icon-note menu-icon"></i><span class="nav-text">Buat Lowongan</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="widgets.html"  aria-expanded="false">
+                            <i class="icon-user menu-icon"></i><span class="nav-text">Lamaran</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="widgets.html" aria-expanded="false">
+                            <i class="icon-bell menu-icon"></i><span class="nav-text">Data Lowongan</span>
+                        </a>
+                    </li>
+                     <li>
+                        <a href="widgets.html" aria-expanded="false">
+                            <i class="icon-settings menu-icon"></i><span class="nav-text">User Privilege</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->

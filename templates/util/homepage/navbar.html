@@ -1,0 +1,28 @@
+{% load static %}
+<div class="col-lg-9 col-md-9">
+                            <div class="menu-wrapper">
+                                <!-- Main-menu -->
+                                <div class="main-menu">
+                                    <nav class="d-none d-lg-block">
+                                        <ul id="navigation">
+                                            <li><a href="/">Home</a></li>
+                                            <li><a href="{% url 'home:list_halaman' %}">Cari Lowongan </a></li>
+                                            <li><a href="about.html">Tentang</a></li>                                            
+                                            <li><a href="contact.html">Contact</a></li>
+                                            <li class="d-block d-lg-none">
+                                                <a href="{% url 'home:login_halaman' %}">Login / Register</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>          
+                                <!-- Header-btn -->
+                                <div class="header-btn d-none f-right d-lg-block">
+                                    <a href="{% url 'home:login_halaman' %}" class="btn head-btn1">Register</a>
+                                    <a href="{% url 'home:login_halaman' %}" class="btn head-btn2">Login</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
