@@ -1,6 +1,5 @@
 {% load static %}
-
-    <!--**********************************
+        <!--**********************************
             Footer start
         ***********************************-->
         <div class="footer">
@@ -24,28 +23,7 @@
     <script src="{% static 'admin/js/settings.js' %}"></script>
     <script src="{% static 'admin/js/gleek.js' %}"></script>
     <script src="{% static 'admin/js/styleSwitcher.js' %}"></script>
-    <script src="{% static 'admin/plugins/tables/js/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'admin/plugins/tables/js/datatable/dataTables.bootstrap4.min.js' %}"></script>
-    <script src="{% static 'admin/plugins/tables/js/datatable-init/datatable-basic.min.js' %}"></script>  
 
-<script>
-    $(document).ready(function () {
-        // Inisialisasi DataTable
-        var table = $('.zero-configuration').DataTable();
-
-        // Event listener untuk dropdown
-        $('#inputState').on('change', function () {
-            var selectedValue = $(this).val(); // Ambil nilai yang dipilih
-            if (selectedValue) {
-                // Filter tabel berdasarkan kolom 'Position'
-                table.column(1).search(selectedValue).draw();
-            } else {
-                // Kosongkan filter jika tidak ada yang dipilih
-                table.column(1).search('').draw();
-            }
-        });
-    });
-</script>
 </body>
 
 </html>

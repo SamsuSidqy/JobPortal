@@ -1,0 +1,49 @@
+{% load static %}
+
+{% include 'util/dashboard_user/head.html' %}
+
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                
+                <button type="button" class="btn btn-primary" style="margin-bottom: 10px;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="ti-filter">&nbsp; Filter Lowongan</i></button>
+                  
+                  <div class="row m-b-30">  
+
+                            <div class="col-lg-6">
+                                <div class="card border-warning">
+                                    <div class="card-header"><i class="ti-infinite">&nbsp; Technology</i></div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">PHP Developer</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p><a href="{% url 'pelamar:pelamar_read_lowongan' slug='a' %}" class="btn btn-warning">Apply</a>
+                                    </div>
+                                    <div class="card-footer"><small>Last updateed 3 min ago</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
+                        </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+{% include 'util/dashboard_user/foot.html' %}

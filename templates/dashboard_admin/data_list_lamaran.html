@@ -1,0 +1,85 @@
+{% load static %}
+
+{% include 'util/dashboard_admin/head.html' %}
+
+ <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Data Pelamar</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama Lengkap</th>
+                                                <th>Position</th>
+                                                <th>Umur</th>
+                                                <th>CV</th>
+                                                <th>Profile</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>60</td>
+                                                <td>
+                                                    <a href="#">
+                                                        <i class="ti-eye">&nbsp; Lihat</i>
+                                                    </a> 
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'admins:admin_profile_pelamar' data='aa' %}"><i class="ti-eye">&nbsp; Lihat</i></a>  
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <button type="button" class="btn mb-1 btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                                                        <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
+                                                            <a class="dropdown-item" href="#int">Interview</a> 
+                                                            <a class="dropdown-item" href="#tolak">Tolak</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Umur</th>
+                                                <th>CV</th>
+                                                <th>Profile</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+{% include 'util/dashboard_admin/foot.html' %}

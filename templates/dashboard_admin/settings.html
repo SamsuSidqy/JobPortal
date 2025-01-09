@@ -1,0 +1,77 @@
+{% load static %}
+
+{% include 'util/dashboard_admin/head.html' %}
+
+ <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Settings</h4>
+                                <div class="basic-form">
+                                    <form>                                        
+                                        
+                                        <div class="form-group row">
+                                            <div class="col-sm-2">Tambah Kategori</div>
+                                            <div class="col-sm-10">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox">
+                                                    <label class="form-check-label">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-2">Tambah Location</div>
+                                            <div class="col-sm-10">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox">
+                                                    <label class="form-check-label">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-2">Tambah Education</div>
+                                            <div class="col-sm-10">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox">
+                                                    <label class="form-check-label">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-10">
+                                                <button type="submit" class="btn btn-dark">Set</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+{% include 'util/dashboard_admin/foot.html' %}                    

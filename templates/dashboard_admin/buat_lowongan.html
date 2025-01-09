@@ -40,6 +40,10 @@
                                                 </select>
                                         </div>
                                         <div class="form-group">
+                                                <label>Jumlah Recuitment <code>*</code></label>
+                                                <input type="number" value="1" min="1" class="form-control" placeholder="Jumlah Recuitment">
+                                        </div>
+                                        <div class="form-group">
                                            <label>Tipe Pekerjaan <code>*</code></label>
                                                 <select id="inputState" class="form-control">
                                                     <option selected="selected">Choose...</option>
@@ -56,10 +60,12 @@
                                                 <label class="form-check-label">Sembunyikan Gaji</label>
                                             </div>
                                         </div>
+
                                         <div class="form-group">
-                                            
+                                            <label>Description</label>
+                                            <div id="editor" class="form-control" style="height: 300px;"></div>
                                         </div>
-                                        <button type="submit" class="btn btn-dark">Sign in</button>
+                                        <button type="submit" class="btn btn-dark">Publish</button>
                                     </form>
                                 </div>
                             </div>
@@ -73,5 +79,25 @@
         <!--**********************************
             Content body end
         ***********************************-->
-        
+<script>
+const quill = new Quill('#editor', {
+  modules: {
+    toolbar: [
+      [{ header: [1, 2, 3,4,5,false] }],
+      ['bold', 'italic', 'underline',],
+      ['link', 'video', 'formula'],
+      ['image', 'code-block','blockquote'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'direction': 'rtl' }],
+      [{ 'align': [] }],
+      [{ 'color': [] }, { 'background': [] }],  
+      [{ 'font': [] }],
+    ],
+  },
+  placeholder: 'Deskripsi & Kualifikasi Untuk Lowongan',
+  theme: 'snow', // or 'bubble'
+});    
+</script>        
 {% include 'util/dashboard_admin/foot.html' %}

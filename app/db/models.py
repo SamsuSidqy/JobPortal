@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 class KategoriLowongan(models.Model):
 	name = models.CharField(max_length=255)
+	is_publish = models.BooleanField(default=False)
 
 	class Meta:
 		permissions = [
@@ -11,6 +12,7 @@ class KategoriLowongan(models.Model):
 
 class LocationLowongan(models.Model):
 	name = models.CharField(max_length=255)
+	is_publish = models.BooleanField(default=False)
 	class Meta:
 		permissions = [
 			('only_admin',"Can Location")
@@ -18,17 +20,13 @@ class LocationLowongan(models.Model):
 
 class Education(models.Model):
 	name = models.CharField(max_length=100)
+	is_publish = models.BooleanField(default=False)
 	class Meta:
 		permissions = [
 			('only_admin',"Can Education")
 		]
 
-class Subject(models.Model):
-	name = models.CharField(max_length=50)
-	class Meta:
-		permissions = [
-			('only_admin',"Can Subject")
-		]
+
 
 
 class UserManager(BaseUserManager):
@@ -83,6 +81,7 @@ class Lowongan(models.Model):
 	location = models.ForeignKey(LocationLowongan,on_delete=models.CASCADE)
 	description = models.TextField()
 	max_apply = models.IntegerField()
+	number_recruits = models.IntegerField()
 	salary = models.CharField(max_length=255)
 	is_salary = models.BooleanField(default=False)
 	is_apply = models.BooleanField(default=False)
@@ -134,7 +133,7 @@ class Notification(models.Model):
 	readed = models.BooleanField(default=False)
 	send_form = models.ForeignKey(Pengguna,on_delete=models.CASCADE,related_name='send_from_notifications')
 	accept_to = models.ForeignKey(Pengguna,on_delete=models.CASCADE,related_name='accepted_to_notifications')
-	subject = models.ForeignKey(Subject,on_delete=models.CASCADE)
+	subject = models.TextField()
 	message = models.TextField()
 
 	class Meta:

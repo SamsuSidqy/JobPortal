@@ -1,0 +1,205 @@
+{% load static %}
+
+{% include 'util/dashboard_user/head.html' %}
+
+
+  <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                 <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-validation">
+                                    <form class="form-valide" action="#" method="post">
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-username">Foto Formal<span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <img height="150" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSteItzPyeDKBxyWiOA8xrPZXIlxOYv1b1VVg&s">
+                                                <input type="file" class="d-none" id="val-username" name="val-username" placeholder="Enter a username..">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-username">Nama Lengkap <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="val-username" name="val-username" placeholder="Enter a username..">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-email">Email <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="email" class="form-control" id="val-email" name="val-email" placeholder="Your valid email..">
+                                            </div>
+                                        </div>
+                                         <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-email">Telepon <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="val-email" name="val-email" placeholder="Nomor Telepon">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-password">Tanggal Lahir <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="date" class="form-control" id="val-password" name="val-password" placeholder="Choose a safe one..">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-confirm-password">Pendidikan Terakhir <span class="text-danger">*</span>
+                                            </label>
+                                              <div class="col-auto my-1">
+                                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                    <option selected="selected">SMK / SMA</option>
+                                                    <option value="1">D1</option>
+                                                    <option value="2">D2</option>
+                                                    <option value="3">D3</option>
+                                                    <option>D4</option>
+                                                    <option>S1</option>
+                                                    <option>S2</option>
+                                                    <option>Doctor</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-suggestions">Jurusan <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" name="">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-suggestions">Ceritakan Diri Anda <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <textarea class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-currency">CV <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <span>*pdf</span>
+                                                <input placeholder="*pdf" type="file" class="form-control" id="val-currency" name="val-currency" placeholder="$21.60">
+                                                <span><a href="#">Open File</a></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-website">Website 
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="val-website" name="val-website" placeholder="https://example.com">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-website">Linkedln 
+                                            </label>
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" id="val-website" name="val-website" placeholder="https://linkedln.com/in/username">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-skill">Skill
+                                            </label>
+                                            <div class="col-lg-6" id="tags-input" style="padding: 15px; position: relative;">
+                                            <div class="tags-wrapper" style="border: 1px solid #ccc; border-radius: 4px; padding: 5px; display: flex; flex-wrap: wrap; gap: 5px;">
+                                                <input type="text" style="flex: 1; border: none; outline: none; padding: 5px;" class="form-control" id="tags" name="val-website" placeholder="Skills Anda">
+                                            </div>
+                                            <input type="hidden" class="form-control" id="tags-value" name="tags" />
+                                        </div>
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function () {
+                                            const tagsWrapper = document.querySelector('.tags-wrapper');
+                                            const tagsValue = document.getElementById('tags-value');
+                                            const input = document.getElementById('tags');
+
+                                            input.addEventListener('keydown', function (e) {
+                                                if (e.key === 'Enter' && input.value.trim() !== '') {
+                                                    e.preventDefault();
+
+                                                    const tag = document.createElement('span');
+                                                    tag.classList.add('label', 'label-info');
+                                                    tag.style.display = 'inline-flex';
+                                                    tag.style.alignItems = 'center';
+                                                    tag.style.background = '#007bff';
+                                                    tag.style.color = 'white';
+                                                    tag.style.padding = '5px 5px';
+                                                    tag.style.borderRadius = '3px';
+                                                    tag.style.marginRight = '5px';
+
+                                                    tag.textContent = input.value.trim();
+
+                                                    const removeSpan = document.createElement('span');
+                                                    removeSpan.textContent = 'X';
+                                                    removeSpan.style.cursor = 'pointer';
+                                                    removeSpan.style.color = 'white';
+                                                    removeSpan.style.marginLeft = '8px';
+                                                    removeSpan.style.fontWeight = 'bold';
+
+                                                    removeSpan.addEventListener('click', function () {
+                                                        tag.remove();
+                                                        updateTagsValue();
+                                                    });
+
+                                                    tag.appendChild(removeSpan);
+                                                    tagsWrapper.insertBefore(tag, input);
+                                                    input.value = ''; // Clear the input field
+                                                    updateTagsValue();
+                                                }
+                                            });
+
+                                            function updateTagsValue() {
+                                                const tags = [];
+                                                tagsWrapper.querySelectorAll('span.label-info').forEach(tag => {
+                                                    tags.push(tag.textContent.replace('X', '').trim());
+                                                });
+                                                tagsValue.value = tags.join(',');
+                                            }
+                                        });
+                                        </script>
+                                        </div>                                        
+                                       
+                                        <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label"><a href="#">Terms &amp; Conditions</a>  <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-lg-8">
+                                                <label class="css-control css-control-primary css-checkbox" for="val-terms">
+                                                    <input type="checkbox" class="css-control-input" id="val-terms" name="val-terms" value="1"> <span class="css-control-indicator"></span> I agree to the terms</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-lg-8 ml-auto">
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+{% include 'util/dashboard_user/foot.html' %}

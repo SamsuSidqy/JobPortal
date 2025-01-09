@@ -1,0 +1,59 @@
+{% load static %}
+
+{% include 'util/dashboard_admin/head.html' %}
+
+ <!--**********************************
+            Content body start
+        ***********************************-->
+         <div class="content-body">
+
+            <div class="container-fluid mt-3">
+                <div class="row">                   
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Data Lowongan</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered verticle-middle">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Lowongan</th>
+                                                <th scope="col">Max Lamaran</th>
+                                                <th scope="col">Deadline</th>
+                                                <th scope="col">Updated</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <tr>
+                                                <td>Textiles</td>
+                                                <td>
+                                                    <div class="progress" style="height: 10px">
+                                                        <div class="progress-bar gradient-2" style="width: 70%;" role="progressbar"><span class="sr-only">70% Complete</span>
+                                                        </div>
+                                                    </div> 
+                                                    <span style="margin-top: 5px; font-size: 12px;">120 of 200</span>
+                                                </td>
+                                                <td>May 27,2018</td>
+                                                <td>May 27,2018</td>
+                                                <td><span><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Lowongan"><i class="fa fa-pencil color-muted m-r-5"></i> </a>
+                                                <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Lowongan"><i class="fa fa-close color-muted m-r-5"></i> </a></span>
+                                                </td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+{% include 'util/dashboard_admin/foot.html' %}
