@@ -52,12 +52,12 @@ class UserManager(BaseUserManager):
 class Pengguna(AbstractUser):
 	username = models.CharField(max_length=255,unique=True)
 	unique_token = models.TextField(unique=True)
-	complete_name = models.CharField(max_length=255)
+	complete_name = models.CharField(max_length=255,null=True)
 	email = models.EmailField(unique=True)
 	password = models.TextField()
-	no_telp = models.TextField(unique=True,max_length=12)
+	no_telp = models.TextField(unique=True,max_length=12,null=True)
 	profile = models.TextField(null=True),
-	skills = models.TextField()
+	skills = models.TextField(null=True)
 	date_birth = models.DateTimeField(null=True)
 	last_education = models.ForeignKey(Education,on_delete=models.CASCADE,null=True)
 	jurusan = models.CharField(max_length=255,null=True)

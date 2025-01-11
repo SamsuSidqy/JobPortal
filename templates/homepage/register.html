@@ -111,22 +111,25 @@ body {
 </style>
 <body>
 <div class="login-page">
-  <div class="form">
-    <form class="register-form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form>
-    <form class="login-form">
-      <input type="text" placeholder="Email"/>
-      <input type="password" placeholder="Password"/>
-      <button>login</button>
-      <p class="message">Not registered? <a href="{% url 'home:register_halaman' %}">Create an account</a></p>
+ 
+  <div class="form">    
+    <form class="login-form" action="" method="POST"> {% csrf_token %}
+      <input type="text" style="border:1px solid red;"  name="{{form.username.name}}" placeholder="Username"/>
+      <input type="email" name="{{form.email.name}}"  placeholder="Email"/>
+      <input type="password" name="{{form.password.name}}"  placeholder="Password"/>
+      <button>Create</button>
+      <p class="message">registered? <a href="{% url 'home:login_halaman' %}">Login Here</a></p>
     </form>
   </div>
 </div>
+
+{% for field in forms_error %}
+
+{% if field.errors %}
+{{field.name.errors}}
+{% endif %}
+
+{% endfor %}
 <script>
 
 </script>
