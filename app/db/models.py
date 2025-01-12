@@ -1,9 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from uuid import uuid4
+
+
+class DisabeldForm(models.Model):
+	education = models.BooleanField(default=False)
+	kategori = models.BooleanField(default=False)
+	location = models.BooleanField(default=False)
 
 class KategoriLowongan(models.Model):
-	name = models.CharField(max_length=255)
-	is_publish = models.BooleanField(default=False)
+	name = models.CharField(max_length=255,unique=True)
 
 	class Meta:
 		permissions = [
@@ -11,16 +17,14 @@ class KategoriLowongan(models.Model):
 		]
 
 class LocationLowongan(models.Model):
-	name = models.CharField(max_length=255)
-	is_publish = models.BooleanField(default=False)
+	name = models.CharField(max_length=255,unique=True)
 	class Meta:
 		permissions = [
 			('only_admin',"Can Location")
 		]
 
 class Education(models.Model):
-	name = models.CharField(max_length=100)
-	is_publish = models.BooleanField(default=False)
+	name = models.CharField(max_length=100,unique=True)
 	class Meta:
 		permissions = [
 			('only_admin',"Can Education")
@@ -51,7 +55,7 @@ class UserManager(BaseUserManager):
 
 class Pengguna(AbstractUser):
 	username = models.CharField(max_length=255,unique=True)
-	unique_token = models.TextField(unique=True)
+	unique_token = models.TextField(unique=True,default=uuid4())
 	complete_name = models.CharField(max_length=255,null=True)
 	email = models.EmailField(unique=True)
 	password = models.TextField()
