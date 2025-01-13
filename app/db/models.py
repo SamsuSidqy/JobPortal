@@ -22,12 +22,18 @@ class KategoriLowongan(models.Model):
 			('only_admin',"Can Kategori")
 		]
 
+	def __str__(self):
+		return f"{self.name}"
+
 class LocationLowongan(models.Model):
 	name = models.CharField(max_length=255,unique=True)
 	class Meta:
 		permissions = [
 			('only_admin',"Can Location")
 		]
+
+	def __str__(self):
+		return f"{self.name}"
 
 class Education(models.Model):
 	name = models.CharField(max_length=100,unique=True)
@@ -36,12 +42,18 @@ class Education(models.Model):
 			('only_admin',"Can Education")
 		]
 
+	def __str__(self):
+		return f"{self.name}"
+
 class TipeLowongan(models.Model):
 	name = models.CharField(max_length=100,unique=True)
 	class Meta:
 		permissions = [
 			('only_admin',"Can Education")
 		]
+		
+	def __str__(self):
+		return f"{self.name}"
 
 
 

@@ -14,49 +14,63 @@
                             <div class="card-body">
                                 <h4 class="card-title">Upload Lowongan</h4>
                                 <div class="basic-form">
+                                
                                     <form>
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>Title Pekerjaan <code>*</code></label>
-                                                <input type="email" class="form-control" placeholder="Email">
+                                                <input type="email" name="{{form.title.name}}" class="form-control" placeholder="Email">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Kategori Pekerjaan <code>*</code></label>
-                                                <select id="inputState" class="form-control">
-                                                    <option selected="selected">Choose...</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                    <option>Option 3</option>
+                                                <select id="inputState" name="{{form.category.name}}" class="form-control">
+                                                <option value="" disabled selected>
+                                                Pilih Kategori</option>
+                                                {% for id,name in form.category.field.choices %}
+                                                 {% if forloop.counter > 1 %}
+                                                    <option value="{{ id }}">{{ name }}</option>
+                                                 {% endif %}         
+                                                {% endfor %}
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                            <label>Lokasi Pekerjaan <code>*</code></label>
-                                                <select id="inputState" class="form-control">
-                                                    <option selected="selected">Choose...</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                    <option>Option 3</option>
+                                                <select name="{{form.location.name}}" id="inputState" class="form-control">
+                                                <option value="" disabled selected>
+                                                Pilih Lokasi</option>
+                                                {% for id,name in form.location.field.choices %}
+                                                 {% if forloop.counter > 1 %}
+                                                    <option value="{{ id }}">{{ name }}</option>
+                                                 {% endif %}         
+                                                {% endfor %}
                                                 </select>
                                         </div>
                                         <div class="form-group">
-                                                <label>Jumlah Recuitment <code>*</code></label>
-                                                <input type="number" value="1" min="1" class="form-control" placeholder="Jumlah Recuitment">
+                                                <label>Jumlah Recuitment <span>(Optional)</span></label>
+                                                <input type="number" value="1" min="1" class="form-control"name="{{form.max_apply.name}}" placeholder="Jumlah Recuitment">
+                                                <div class="form-check" style="margin-top: 8px;">
+                                                <input class="form-check-input"name="{{form.is_aply.name}}" type="checkbox">
+                                                <label class="form-check-label">Batasi Applyment</label>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                            <label>Tipe Pekerjaan <code>*</code></label>
-                                                <select id="inputState" class="form-control">
-                                                    <option selected="selected">Choose...</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                    <option>Option 3</option>
+                                                <select name="{{form.tipe.name}}" id="inputState" class="form-control">
+                                                <option value="" disabled selected>
+                                                Pilih Tipe Pekerjaan</option>
+                                                {% for id,name in form.tipe.field.choices %}
+                                                 {% if forloop.counter > 1 %}
+                                                    <option value="{{ id }}">{{ name }}</option>
+                                                 {% endif %}         
+                                                {% endfor %}
                                                 </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Gaji</label>
-                                            <input type="text" class="form-control" placeholder="Apartment, studio, or floor">
+                                            <input type="text" class="form-control" placeholder="Apartment, studio, or floor" name="{{form.salary.name}}">
                                             <div class="form-check" style="margin-top: 8px;">
-                                                <input class="form-check-input" type="checkbox">
+                                                <input name="{{form.is_salary.name}}" class="form-check-input" type="checkbox">
                                                 <label class="form-check-label">Sembunyikan Gaji</label>
                                             </div>
                                         </div>
