@@ -11,6 +11,8 @@ from administrator.controller.BuatKategoriPageControl import ControllerBuatKateg
 from administrator.controller.BuatLocationPageControl import ControllerBuatLocationPage
 from administrator.controller.BuatEducationPageControl import ControllerBuatEducationPage
 from administrator.controller.SettingsPageControl import ControllerSettingsPage
+from administrator.controller.BuatTipePageControl import ControllerBuatTipePage
+
 app_name = "admins"
 
 urlpatterns = [
@@ -24,5 +26,6 @@ urlpatterns = [
 	path('kategori/',ControllerBuatKategoriPage.as_view(),name='admin_create_kategori'),
 	path('location/',ControllerBuatLocationPage.as_view(),name='admin_create_location'),
 	path('education/',ControllerBuatEducationPage.as_view(),name='admin_create_education'),
+	path('tipelowongan/',ControllerBuatTipePage.as_view(),name='admin_create_tipe'),
 	path('settings/',ControllerSettingsPage.as_view(),name='admin_settings'),
 ]

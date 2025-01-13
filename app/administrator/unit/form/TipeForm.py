@@ -1,15 +1,15 @@
 from django import forms
-from db.models import Education
+from db.models import TipeLowongan
 
-class FormEducation(forms.ModelForm):
+class FormTipeLowongan(forms.ModelForm):
 	updateField = forms.BooleanField()	
 	class Meta:
-		model = Education
+		model = TipeLowongan
 		fields = ['name']
 		error_messages = {
 			'name':{
 				'required':("Name Tidak Boleh Kosong"),
-				"unique":("Education Sudah Tersedia"),
+				"unique":("TipeLowongan Sudah Tersedia"),
 			}
 		}
 
@@ -17,13 +17,13 @@ class FormEducation(forms.ModelForm):
 
 	def clean_name(self):
 		get = self.cleaned_data.get('name')
-		cek = Education.objects.filter(name__contains=get)
+		cek = TipeLowongan.objects.filter(name__contains=get)
 		
 		if self.cleaned_data.get("updateField"):
 			return get
 		else:
 			if get and cek:
-				raise forms.ValidationError("Education Sudah Tersedia", code="unique")
+				raise forms.ValidationError("TipeLowongan Sudah Tersedia", code="unique")
 			else:
 				return get
 		

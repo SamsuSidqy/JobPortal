@@ -20,7 +20,8 @@ class ControllerBuatEducationPage(LoginRequiredMixin,AdminGroupRequiredMixins,Te
 
 
 	def get(self,req,*args,**kwargs):
-		checkDisabled = DisabeldForm.objects.first()		
+		DisabeldForm.objects.get_or_create()
+		checkDisabled = DisabeldForm.objects.first()	
 		
 		self.context['disabled'] = checkDisabled.education
 		self.context['education'] = Education.objects.all()
@@ -42,5 +43,5 @@ class ControllerBuatEducationPage(LoginRequiredMixin,AdminGroupRequiredMixins,Te
 			disable.save()
 			return redirect("admins:admin_create_education")
 		else:			
-			return render(req,self.template_name,{"form":form})
+			return render(req,self.template_name,{"form":form,"education":Education.objects.all()})
 

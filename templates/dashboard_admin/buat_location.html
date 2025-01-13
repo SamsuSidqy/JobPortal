@@ -14,18 +14,60 @@
                             <div class="card-body">
                                 <h4 class="card-title">Tambah Location</h4>
                                 <div class="basic-form">
-                                    <form>
-                                        
+                                    <form id="formsCreate" {% if disabled %} action="" method="POST" {% endif %}>
+                                        {% csrf_token %} 
                                         <div class="form-group">
+                                            <input 
+                                            style="display:none;"
+                                            checked=""
+                                            type="checkbox" name="{{form.updateField.name}}">
                                             <label>Name Location</label>
-                                            <input type="text" class="form-control" placeholder="Bandung, West Java, Indonesia">
-                                            
-                                        </div>
-
+                                            {% if form.name.errors %}
+                                            <br>
+                                            <span style="font-size: 10px; color: red;">* {{form.name.errors.0}} Required</span>
+                                            {% endif %}
+                                            <input
+                                            {% if form.name.errors %}
+                                            style="border: 1px solid red;"
+                                            {% endif %}
+                                            autocomplete="off" 
+                                            required
+                                            {% if disabled %} {% else %} disabled {% endif %}
+                                            name="{{form.name.name}}" type="text" class="form-control" placeholder="Bandung, West Java, Indonesia">
+                                        </div>                                        
                                         <div class="form-group">
                                             
                                         </div>
-                                        <button type="submit" class="btn btn-dark">Create</button>
+                                        <button
+                                        id="updateBtn"
+                                        {% if disabled %} {% else %} disabled {% endif %}
+                                         type="submit" class="btn btn-dark">Create</button>
+                                    </form>
+                                     <form id="forms" action="" method="POST" style="display:none;">
+                                        {% csrf_token %}
+                                       <input 
+                                            style="display:none;"      
+                                            checked="checked"                                     
+                                            type="checkbox" name="{{form.updateField.name}}"> 
+                                       <input type="hidden" name="type" value="PUT">
+                                       <div class="form-group">
+                                            <label>Name Location</label>
+                                            <input id="idUpdate" type="hidden" name="id">
+                                            {% if form.name.errors %}
+                                            <br>
+                                            <span style="font-size: 10px; color: red;">* {{form.name.errors.0}} Required</span>
+                                            {% endif %}
+                                            <input
+                                            {% if form.name.errors %}
+                                            style="border: 1px solid red;"
+                                            {% endif %}
+                                            autocomplete="off"   
+                                            id="nameUpdate"  
+                                            name="{{form.name.name}}"
+                                            required
+                                            type="text" class="form-control" placeholder="Bandung, West Java, Indonesia">
+                                        </div> 
+                                        <button class="btn btn-dark">Update</button>
                                     </form>
                                 </div>
                             </div>
@@ -46,15 +88,28 @@
                                         </thead>
                                         <tbody>
                                             
+                                            {% for data in location %}
                                             <tr>
-                                                <td>Bandung, West Java, Indonesia</td>
+                                                <td>{{ data.name }}</td>  
                                                 <td>
                                                     <span>
-                                                        <a href="/administrator/lamaran/aa/" data-toggle="tooltip" data-placement="top" title="" data-original-title="Publish Lamaran"><i class="fa fa-pencil color-muted m-r-5"></i> </a>
+                                                        <a 
+                                                        onclick="updateFunc('{{data.id}}','{{data.name}}')" 
+                                                        style="cursor: pointer;" 
+                                                        data-toggle="tooltip" data-placement="top" title="" data-original-title="Publish Lamaran"><i class="fa fa-pencil color-muted m-r-5"></i> </a>
                                                     </span>                                                    
                                                 </td>
                                             </tr>
-                                            
+                                            {% endfor %}
+                                            <script>
+                                                const updateFunc = (id,name) => {
+                                                   document.getElementById("formsCreate").style.display = "none"
+                                                   form = document.getElementById("forms") 
+                                                   form.style.display = "block"       
+                                                   document.getElementById("nameUpdate").value = name
+                                                   document.getElementById("idUpdate").value = id
+                                                }   
+                                        </script>
                                         </tbody>
                                     </table>
                                 </div>

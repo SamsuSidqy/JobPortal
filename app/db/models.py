@@ -7,6 +7,12 @@ class DisabeldForm(models.Model):
 	education = models.BooleanField(default=False)
 	kategori = models.BooleanField(default=False)
 	location = models.BooleanField(default=False)
+	tipe = models.BooleanField(default=False)
+	
+	class Meta:
+		permissions = [
+			('only_admin',"Can Kategori")
+		]
 
 class KategoriLowongan(models.Model):
 	name = models.CharField(max_length=255,unique=True)
@@ -30,6 +36,12 @@ class Education(models.Model):
 			('only_admin',"Can Education")
 		]
 
+class TipeLowongan(models.Model):
+	name = models.CharField(max_length=100,unique=True)
+	class Meta:
+		permissions = [
+			('only_admin',"Can Education")
+		]
 
 
 
@@ -83,6 +95,7 @@ class Lowongan(models.Model):
 	title = models.CharField(max_length=255)
 	category = models.ForeignKey(KategoriLowongan,on_delete=models.CASCADE)
 	location = models.ForeignKey(LocationLowongan,on_delete=models.CASCADE)
+	tipe = models.ForeignKey(TipeLowongan,on_delete=models.CASCADE)
 	description = models.TextField()
 	max_apply = models.IntegerField()
 	number_recruits = models.IntegerField()

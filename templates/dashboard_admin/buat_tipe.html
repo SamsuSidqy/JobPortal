@@ -12,16 +12,16 @@
                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Tambah Kategori</h4>
+                                <h4 class="card-title">Tambah Tipe Pekerjaan</h4>                       
                                 <div class="basic-form">
-                                   <form id="formsCreate" {% if disabled %} action="" method="POST" {% endif %}>
+                                    <form id="formsCreate" {% if disabled %} action="" method="POST" {% endif %}>
                                         {% csrf_token %} 
                                         <div class="form-group">
                                             <input 
                                             style="display:none;"
                                             checked=""
                                             type="checkbox" name="{{form.updateField.name}}">
-                                            <label>Name Kategori</label>
+                                            <label>Name Tipe Pekerjaan</label>
                                             {% if form.name.errors %}
                                             <br>
                                             <span style="font-size: 10px; color: red;">* {{form.name.errors.0}} Required</span>
@@ -31,9 +31,8 @@
                                             style="border: 1px solid red;"
                                             {% endif %}
                                             autocomplete="off" 
-                                            required
                                             {% if disabled %} {% else %} disabled {% endif %}
-                                            name="{{form.name.name}}" type="text" class="form-control" placeholder="UI/UX || Graphic Designer || Marketing || Programmer">
+                                            name="{{form.name.name}}" type="text" class="form-control" placeholder="Magang || Full-Time || Remote || Part-Time ">
                                         </div>                                        
                                         <div class="form-group">
                                             
@@ -43,7 +42,7 @@
                                         {% if disabled %} {% else %} disabled {% endif %}
                                          type="submit" class="btn btn-dark">Create</button>
                                     </form>
-                                     <form id="forms" action="" method="POST" style="display:none;">
+                                    <form id="forms" action="" method="POST" style="display:none;">
                                         {% csrf_token %}
                                        <input 
                                             style="display:none;"      
@@ -51,7 +50,7 @@
                                             type="checkbox" name="{{form.updateField.name}}"> 
                                        <input type="hidden" name="type" value="PUT">
                                        <div class="form-group">
-                                            <label>Name Location</label>
+                                            <label>Name Tipe Pekerjaan</label>
                                             <input id="idUpdate" type="hidden" name="id">
                                             {% if form.name.errors %}
                                             <br>
@@ -64,9 +63,7 @@
                                             autocomplete="off"   
                                             id="nameUpdate"  
                                             name="{{form.name.name}}"
-                                            required
-                                            type="text" class="form-control"
-                                            placeholder="UI/UX || Graphic Designer || Marketing || Programmer">
+                                            type="text" class="form-control" placeholder="Magang || Full-Time || Remote || Part-Time ">
                                         </div> 
                                         <button class="btn btn-dark">Update</button>
                                     </form>
@@ -75,20 +72,20 @@
                         </div>
                     </div>
 
-                     <div class="col-12">
+                    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Data Kategori</h4>
+                                <h4 class="card-title">Data Tipe Pekerjaan</h4>
                                 <div class="table-responsive">
                                     <table class="table table-bordered verticle-middle">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Kategori</th>
+                                                <th scope="col">Tipe Pekerjaan</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          {% for data in kategori %}
+                                            {% for data in tipe %}
                                             <tr>
                                                 <td>{{ data.name }}</td>  
                                                 <td>
@@ -101,16 +98,16 @@
                                                 </td>
                                             </tr>
                                             {% endfor %}
-                                            <script>
-                                                const updateFunc = (id,name) => {
-                                                   document.getElementById("formsCreate").style.display = "none"
-                                                   form = document.getElementById("forms") 
-                                                   form.style.display = "block"       
-                                                   document.getElementById("nameUpdate").value = name
-                                                   document.getElementById("idUpdate").value = id
-                                                }   
-                                        </script>
                                         </tbody>
+                                        <script>
+                                        const updateFunc = (id,name) => {
+                                           document.getElementById("formsCreate").style.display = "none"
+                                           form = document.getElementById("forms") 
+                                           form.style.display = "block"       
+                                           document.getElementById("nameUpdate").value = name
+                                           document.getElementById("idUpdate").value = id
+                                        }   
+                                        </script>
                                     </table>
                                 </div>
                             </div>
