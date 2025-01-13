@@ -17,7 +17,7 @@ app_name = "admins"
 
 urlpatterns = [
 	path('',ControllerIndexPage.as_view(),name='admin_index'),
-	path('makeapply/',ControllerBuatPage.as_view(),name='admin_create'),
+	path('createlowongan/',ControllerBuatPage.as_view(),name='admin_create'),
 	path('datalowongan/',ControllerDataLowonganPage.as_view(),name='admin_data_lowongan'),
 	path('datalamaran/',ControllerDataLamaranPage.as_view(),name='admin_data_lamaran'),
 	path('lamaran/<str:data>/',ControllerDataListLamaranPage.as_view(),name='admin_detail_lamaran_lowongan'),

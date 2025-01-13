@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import TemplateView
 from administrator.unit.customMiddleware.mixins import AdminGroupRequiredMixins
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -15,3 +15,14 @@ class ControllerBuatPage(LoginRequiredMixin,AdminGroupRequiredMixins,TemplateVie
 
 	def get(self,req,*args,**kwargs):
 		return render(req,self.template_name,self.context)
+
+	def post(self,req,*args,**kwargs):
+		form = FormLowongan(req.POST or None)
+
+		if form.is_valid():
+			form.save()
+			return redirect("admins:admin_create")
+		else:
+			print(form.errors)
+			print("error")
+			return render(req,self.template_name,{"form":form})

@@ -5,13 +5,137 @@
  <!--**********************************
             Content body start
         ***********************************-->
+
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+       
          <div class="content-body">
 
             <div class="container-fluid mt-3">
                 <div class="row">                   
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-body">
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert {% if message.tags == 'info' %} alert-warning {% else %} alert-success {% endif %} alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                            </button> 
+                            <strong>{{ message }}</strong></div>
+                            {% endfor %}
+                            {% endif %} 
+                            <br>
+                            <div class="card-body" style="display:none;" id="card-update">
+                                <h4 class="card-title">Upload Lowongan</h4>
+                                <div class="basic-form">
+                                
+                                    <form id="forms" action="" method="POST">{% csrf_token %}
+                                        <input type="hidden" name="id">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Title Pekerjaan <code>*</code></label>
+                                                {% if form.title.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.title.errors.0}} </span>
+                                                {% endif %}
+                                                <input value="aaa" type="Title Pekerjaan" name="{{form.title.name}}" class="form-control" placeholder="Title Pekerjaan">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Kategori Pekerjaan <code>*</code></label>
+                                                {% if form.category.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.category.errors.0}} </span>
+                                                {% endif %}
+                                                <select id="inputState" name="{{form.category.name}}" class="form-control">
+                                                <option value="" disabled selected>
+                                                Pilih Kategori</option>
+                                                {% for id,name in form.category.field.choices %}
+                                                 {% if forloop.counter > 1 %}
+                                                    <option value="{{ id }}">{{ name }}</option>
+                                                 {% endif %}         
+                                                {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                           <label>Lokasi Pekerjaan <code>*</code></label>
+                                                {% if form.location.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.location.errors.0}} Required</span>
+                                                {% endif %}
+                                                <select name="{{form.location.name}}" id="inputState" class="form-control">
+                                                <option value="" disabled selected>
+                                                Pilih Lokasi</option>
+                                                {% for id,name in form.location.field.choices %}
+                                                 {% if forloop.counter > 1 %}
+                                                    <option value="{{ id }}">{{ name }}</option>
+                                                 {% endif %}         
+                                                {% endfor %}
+                                                </select>
+                                        </div>
+                                        <div class="form-group">
+                                                <label>Jumlah Recuitment <span>(Optional)</span></label>
+                                                {% if form.max_apply.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.max_apply.errors.0}} </span>
+                                                {% endif %}
+                                                <input type="number" value="1" min="1" class="form-control"name="{{form.max_apply.name}}" placeholder="Jumlah Recuitment">
+                                                <div class="form-check" style="margin-top: 8px;">
+                                                <input class="form-check-input"
+                                                name="{{form.is_apply.name}}" type="checkbox">
+                                                <label class="form-check-label">Batasi Applyment</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                           <label>Tipe Pekerjaan <code>*</code></label>
+                                                {% if form.tipe.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.tipe.errors.0}}</span>
+                                                {% endif %}
+                                                <select name="{{form.tipe.name}}" id="inputState" class="form-control">
+                                                <option value="" disabled selected>
+                                                Pilih Tipe Pekerjaan</option>
+                                                {% for id,name in form.tipe.field.choices %}
+                                                 {% if forloop.counter > 1 %}
+                                                    <option value="{{ id }}">{{ name }}</option>
+                                                 {% endif %}         
+                                                {% endfor %}
+                                                </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Gaji <code>*</code></label>
+                                            {% if form.salary.errors %}
+                                            <br>
+                                            <span style="font-size: 10px; color: red;">{{form.salary.errors.0}} Required</span>
+                                            {% endif %}
+                                            <input type="number" class="form-control" placeholder="Apartment, studio, or floor" name="{{form.salary.name}}">
+                                            <div class="form-check" style="margin-top: 8px;">
+                                                <input name="{{form.is_salary.name}}" class="form-check-input" type="checkbox">
+                                                <label class="form-check-label">Sembunyikan Gaji</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                             {% if form.description.errors %}
+                                            <br>
+                                            <span style="font-size: 10px; color: red;">* {{form.description.errors.0}} Belum Terisi</span>
+                                            {% endif %}
+                                            <input id="deskripsi" type="hidden" name="{{form.description.name}}">
+                                           
+                                            <div id="editor" class="form-control" style="height: 300px;"></div>
+                                        </div>
+                                        <button type="submit" class="btn btn-dark">Update</button>
+                                        <button type="button" onclick="canceUpdate()" class="btn btn-light">Cancel</button>
+                                    </form>
+                                    <br>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="card-body" id="card-data">
                                 <h4 class="card-title">Data Lowongan</h4>
                                 <div class="table-responsive">
                                     <table class="table table-bordered verticle-middle">
@@ -19,15 +143,15 @@
                                             <tr>
                                                 <th scope="col">Lowongan</th>
                                                 <th scope="col">Max Lamaran</th>
-                                                <th scope="col">Deadline</th>
                                                 <th scope="col">Updated</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            {% for data in lowongan %}
                                             <tr>
-                                                <td>Textiles</td>
+
+                                                <td>{{data.title}}</td>
                                                 <td>
                                                     <div class="progress" style="height: 10px">
                                                         <div class="progress-bar gradient-2" style="width: 70%;" role="progressbar"><span class="sr-only">70% Complete</span>
@@ -35,17 +159,107 @@
                                                     </div> 
                                                     <span style="margin-top: 5px; font-size: 12px;">120 of 200</span>
                                                 </td>
-                                                <td>May 27,2018</td>
-                                                <td>May 27,2018</td>
-                                                <td><span><a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Lowongan"><i class="fa fa-pencil color-muted m-r-5"></i> </a>
+                                                <td>{{data.updated_at}}</td>
+                                                <span
+                                                title="{{data.title}}"
+                                                kategori="{{data.category.id}}"
+                                                lokasi="{{data.location.id}}"
+                                                tipe="{{data.tipe.id}}"
+                                                description="{{data.description}}"
+                                                is_apply="{{data.is_apply}}"
+                                                is_salary="{{data.is_salary}}"
+                                                max_apply="{{data.max_apply}}"
+                                                salary="{{data.salary}}"
+                                                class="d-none"
+                                                id="data{{data.id}}"></span>
+                                                <td><span><a onclick="updateLoker('{{data.id}}')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Lowongan"><i class="fa fa-pencil color-muted m-r-5"></i> </a>
                                                 <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Lowongan"><i class="fa fa-close color-muted m-r-5"></i> </a></span>
                                                 </td>
                                             </tr>
-                                            
+                                            {% endfor %}
                                         </tbody>
+                                        <script>
+                                        const updateLoker = (id) => {
+                                            let data = document.getElementById(`data${id}`)
+
+                                            const tipe = data.getAttribute("tipe")
+                                            const title = data.getAttribute("title")
+                                            const kategori = data.getAttribute("kategori")
+                                            const lokasi = data.getAttribute("lokasi")
+                                            const description = data.getAttribute("description")
+                                            const is_apply = data.getAttribute("is_apply")
+                                            const is_salary = data.getAttribute("is_salary")
+                                            const maxApply = data.getAttribute("max_apply")
+                                            const salary = data.getAttribute("salary")
+
+                                            let form = document.getElementById("forms")
+                                            form.id.value = id
+                                            form.title.value = title
+                                            form.description.value = description
+                                            form.max_apply.value = maxApply
+                                            form.salary.value = salary
+                                            form.is_apply.checked = is_apply == "True" ? true : false
+                                            form.is_salary.checked = is_salary == "True" ? true : false
+                                            const quill = new Quill('#editor', {
+                                              modules: {
+                                                toolbar: [
+                                                  [{ header: [1, 2, 3,4,5,false] }],
+                                                  ['bold', 'italic', 'underline',],
+                                                  ['link', 'video', 'formula'],
+                                                  ['image', 'code-block','blockquote'],
+                                                  [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+                                                  [{ 'script': 'sub'}, { 'script': 'super' }],
+                                                  [{ 'indent': '-1'}, { 'indent': '+1' }],
+                                                  [{ 'direction': 'rtl' }],
+                                                  [{ 'align': [] }],
+                                                  [{ 'color': [] }, { 'background': [] }],  
+                                                  [{ 'font': [] }],
+                                                ],
+                                              }, 
+                                              theme: 'snow', // or 'bubble'
+                                            });  
+                                            quill.root.innerHTML = description
+
+                                            let selectCategory = form.querySelector("select[name='category']")
+                                            let optionsCategory = Array.from(selectCategory.options)
+                                            optionsCategory.forEach(option => {
+                                              if (option.value == kategori) {
+                                                option.selected = true
+                                              }
+                                            })
+
+                                            let selectTipe = form.querySelector("select[name='tipe']")
+                                            let optionsTipe = Array.from(selectTipe.options);
+                                            optionsTipe.forEach(option => {
+                                              if (option.value == tipe) {
+                                                option.selected = true
+                                              }
+                                            });
+
+                                            let selectLocation = form.querySelector("select[name='location']")
+                                            let optionsLoc = Array.from(selectLocation.options);
+                                            optionsLoc.forEach(option => {
+                                              if (option.value == tipe) {
+                                                option.selected = true
+                                              }
+                                            });
+
+
+                                            document.getElementById("card-update").style.display="block"
+                                            document.getElementById("card-data").style.display="none"
+                                        }
+                                        const canceUpdate = () => {
+                                            document.getElementById("card-update").style.display="none"
+                                            document.getElementById("card-data").style.display="block"
+                                        }
+                                        </script>
                                     </table>
                                 </div>
                             </div>
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -57,3 +271,9 @@
         ***********************************-->
         
 {% include 'util/dashboard_admin/foot.html' %}
+
+
+
+
+
+

@@ -15,14 +15,22 @@
                                 <h4 class="card-title">Upload Lowongan</h4>
                                 <div class="basic-form">
                                 
-                                    <form>
+                                    <form id="forms" action="" method="POST">{% csrf_token %}
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>Title Pekerjaan <code>*</code></label>
-                                                <input type="email" name="{{form.title.name}}" class="form-control" placeholder="Email">
+                                                {% if form.title.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.title.errors.0}} </span>
+                                                {% endif %}
+                                                <input type="Title Pekerjaan" name="{{form.title.name}}" class="form-control" placeholder="Title Pekerjaan">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Kategori Pekerjaan <code>*</code></label>
+                                                {% if form.category.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.category.errors.0}} </span>
+                                                {% endif %}
                                                 <select id="inputState" name="{{form.category.name}}" class="form-control">
                                                 <option value="" disabled selected>
                                                 Pilih Kategori</option>
@@ -36,6 +44,10 @@
                                         </div>
                                         <div class="form-group">
                                            <label>Lokasi Pekerjaan <code>*</code></label>
+                                                {% if form.location.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.location.errors.0}} Required</span>
+                                                {% endif %}
                                                 <select name="{{form.location.name}}" id="inputState" class="form-control">
                                                 <option value="" disabled selected>
                                                 Pilih Lokasi</option>
@@ -48,14 +60,23 @@
                                         </div>
                                         <div class="form-group">
                                                 <label>Jumlah Recuitment <span>(Optional)</span></label>
+                                                {% if form.max_apply.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.max_apply.errors.0}} </span>
+                                                {% endif %}
                                                 <input type="number" value="1" min="1" class="form-control"name="{{form.max_apply.name}}" placeholder="Jumlah Recuitment">
                                                 <div class="form-check" style="margin-top: 8px;">
-                                                <input class="form-check-input"name="{{form.is_aply.name}}" type="checkbox">
+                                                <input class="form-check-input"
+                                                name="{{form.is_apply.name}}" type="checkbox">
                                                 <label class="form-check-label">Batasi Applyment</label>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                            <label>Tipe Pekerjaan <code>*</code></label>
+                                                {% if form.tipe.errors %}
+                                                <br>
+                                                <span style="font-size: 10px; color: red;">* {{form.tipe.errors.0}}</span>
+                                                {% endif %}
                                                 <select name="{{form.tipe.name}}" id="inputState" class="form-control">
                                                 <option value="" disabled selected>
                                                 Pilih Tipe Pekerjaan</option>
@@ -67,16 +88,26 @@
                                                 </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Gaji</label>
-                                            <input type="text" class="form-control" placeholder="Apartment, studio, or floor" name="{{form.salary.name}}">
+                                            <label>Gaji <code>*</code></label>
+                                            {% if form.salary.errors %}
+                                            <br>
+                                            <span style="font-size: 10px; color: red;">{{form.salary.errors.0}} Required</span>
+                                            {% endif %}
+                                            <input type="number" class="form-control" placeholder="Apartment, studio, or floor" name="{{form.salary.name}}">
                                             <div class="form-check" style="margin-top: 8px;">
                                                 <input name="{{form.is_salary.name}}" class="form-check-input" type="checkbox">
                                                 <label class="form-check-label">Sembunyikan Gaji</label>
                                             </div>
                                         </div>
-
+                                        
                                         <div class="form-group">
                                             <label>Description</label>
+                                             {% if form.description.errors %}
+                                            <br>
+                                            <span style="font-size: 10px; color: red;">* {{form.description.errors.0}} Belum Terisi</span>
+                                            {% endif %}
+                                            <input id="deskripsi" type="hidden" name="{{form.description.name}}">
+                                           
                                             <div id="editor" class="form-control" style="height: 300px;"></div>
                                         </div>
                                         <button type="submit" class="btn btn-dark">Publish</button>
@@ -109,9 +140,24 @@ const quill = new Quill('#editor', {
       [{ 'color': [] }, { 'background': [] }],  
       [{ 'font': [] }],
     ],
-  },
-  placeholder: 'Deskripsi & Kualifikasi Untuk Lowongan',
+  }, 
   theme: 'snow', // or 'bubble'
 });    
+
+
+form = document.getElementById("forms")
+
+form.addEventListener("submit",(e) => {
+    e.preventDefault()
+    const content = quill.root.innerHTML
+    if (content == "<p><br></p>") {
+        
+    }else {
+        document.getElementById("deskripsi").value = content
+    }
+    form.submit()
+
+})
+
 </script>        
 {% include 'util/dashboard_admin/foot.html' %}

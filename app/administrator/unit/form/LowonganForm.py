@@ -5,3 +5,4 @@ class FormLowongan(forms.ModelForm):
 	class Meta:
 		model = Lowongan
 		fields ='__all__'
+
