@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from uuid import uuid4
-
+from django.utils.text import slugify
 
 class DisabeldForm(models.Model):
 	education = models.BooleanField(default=False)
@@ -109,6 +109,8 @@ class Lowongan(models.Model):
 	location = models.ForeignKey(LocationLowongan,on_delete=models.CASCADE)
 	tipe = models.ForeignKey(TipeLowongan,on_delete=models.CASCADE)
 	description = models.TextField()
+	slug = models.TextField(null=True,blank=True)
+	is_close = models.BooleanField(default=False)
 	max_apply = models.IntegerField(null=True)
 	salary = models.CharField(max_length=255)
 	is_salary = models.BooleanField(default=False)
@@ -121,10 +123,14 @@ class Lowongan(models.Model):
 			('only_admin',"Can Lowongan")
 		]
 
+	def save(self):
+		self.slug = slugify(self.title)		
+		super(Lowongan,self).save()
+
 
 class ProfilePerusahaan(models.Model):
 	tentang = models.TextField()
-	about = models.CharField(max_length=255)
+	slogan = models.CharField(max_length=100,null=True)
 	name = models.CharField(max_length=255)
 	web = models.CharField(max_length=255)
 	email = models.CharField(max_length=255)

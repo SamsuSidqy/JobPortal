@@ -6,11 +6,7 @@
             Content body start
         ***********************************-->
 
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
+
        
          <div class="content-body">
 
@@ -179,28 +175,8 @@
                                             {% endfor %}
                                         </tbody>
                                         <script>
-                                        const updateLoker = (id) => {
-                                            let data = document.getElementById(`data${id}`)
-
-                                            const tipe = data.getAttribute("tipe")
-                                            const title = data.getAttribute("title")
-                                            const kategori = data.getAttribute("kategori")
-                                            const lokasi = data.getAttribute("lokasi")
-                                            const description = data.getAttribute("description")
-                                            const is_apply = data.getAttribute("is_apply")
-                                            const is_salary = data.getAttribute("is_salary")
-                                            const maxApply = data.getAttribute("max_apply")
-                                            const salary = data.getAttribute("salary")
-
-                                            let form = document.getElementById("forms")
-                                            form.id.value = id
-                                            form.title.value = title
-                                            form.description.value = description
-                                            form.max_apply.value = maxApply
-                                            form.salary.value = salary
-                                            form.is_apply.checked = is_apply == "True" ? true : false
-                                            form.is_salary.checked = is_salary == "True" ? true : false
-                                            const quill = new Quill('#editor', {
+                                        let form = document.getElementById("forms")
+                                        const quill = new Quill('#editor', {
                                               modules: {
                                                 toolbar: [
                                                   [{ header: [1, 2, 3,4,5,false] }],
@@ -217,7 +193,28 @@
                                                 ],
                                               }, 
                                               theme: 'snow', // or 'bubble'
-                                            });  
+                                            });    
+                                        const updateLoker = (id) => {
+                                            let data = document.getElementById(`data${id}`)
+
+                                            const tipe = data.getAttribute("tipe")
+                                            const title = data.getAttribute("title")
+                                            const kategori = data.getAttribute("kategori")
+                                            const lokasi = data.getAttribute("lokasi")
+                                            const description = data.getAttribute("description")
+                                            const is_apply = data.getAttribute("is_apply")
+                                            const is_salary = data.getAttribute("is_salary")
+                                            const maxApply = data.getAttribute("max_apply")
+                                            const salary = data.getAttribute("salary")
+                                            
+                                            form.id.value = id
+                                            form.title.value = title
+                                            form.description.value = description
+                                            form.max_apply.value = maxApply
+                                            form.salary.value = salary
+                                            form.is_apply.checked = is_apply == "True" ? true : false
+                                            form.is_salary.checked = is_salary == "True" ? true : false
+                                              
                                             quill.root.innerHTML = description
 
                                             let selectCategory = form.querySelector("select[name='category']")
@@ -248,6 +245,17 @@
                                             document.getElementById("card-update").style.display="block"
                                             document.getElementById("card-data").style.display="none"
                                         }
+
+                                        form.addEventListener("submit",(e) => {
+                                             e.preventDefault()
+                                            const content = quill.root.innerHTML
+                                            if (content == "<p><br></p>") {
+                                                
+                                            }else {
+                                                document.getElementById("deskripsi").value = content
+                                            }
+                                            form.submit()
+                                        })
                                         const canceUpdate = () => {
                                             document.getElementById("card-update").style.display="none"
                                             document.getElementById("card-data").style.display="block"

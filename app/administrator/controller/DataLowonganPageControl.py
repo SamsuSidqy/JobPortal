@@ -23,7 +23,7 @@ class ControllerDataLowonganPage(LoginRequiredMixin,AdminGroupRequiredMixins,Tem
 	def post(self,req,*args,**kwargs):
 		instance = Lowongan.objects.filter(id=req.POST.get("id")).first()
 		form = FormLowongan(req.POST,instance=instance)
-
+		
 		if form.is_valid():
 			form.save()
 			messages.success(req,"Update Success")

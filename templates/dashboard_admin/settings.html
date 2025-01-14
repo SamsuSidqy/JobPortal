@@ -21,11 +21,22 @@
                 <div class="row">
                     
                     <div class="col-lg-12">
+
                         <div class="card">
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert {% if message.tags == 'info' %} alert-warning {% else %} alert-success {% endif %} alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                            </button> 
+                            <strong>{{ message }}</strong></div>
+                            {% endfor %}
+                            {% endif %} 
+                            <br>
                             <div class="card-body">
                                 <h4 class="card-title">Settings</h4>
                                 <div class="basic-form">
-                                    <form action="" method="POST">                                        
+                                    <form action="" method="POST">    
+                                        <input type="hidden" value="disabled" name="type">          
                                         {% csrf_token %}
                                         <div class="form-group row">
                                             <div class="col-sm-2">Tambah Kategori</div>
@@ -104,6 +115,103 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Profile Perusahaan</h4>
+                                
+                                <div class="basic-form">
+
+                                    <form id="forms"  enctype="multipart/form-data" action="" method="POST">{% csrf_token %}
+                                        <input type="hidden" value="profile" name="type">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"><b>Nama Perusahaan</b></label>
+                                            <div class="col-sm-9">
+                                                <input required name="{{formProfile.name.name}}" value="{{profileP.name}}" maxlength="255" type="text" class="form-control" placeholder="Nama Perusahaan">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"><b>Slogan Perusahaan</b></label>
+                                            <div class="col-sm-9">
+                                                <input required name="{{formProfile.slogan.name}}" value="{{profileP.slogan}}" maxlength="255" type="text" class="form-control" placeholder="Slogan Perusahaan">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"><b>Website Perusahaan</b></label>
+                                            <div class="col-sm-9">
+                                                <input required name="{{formProfile.web.name}}" value="{{profileP.website}}" maxlength="255" type="text" class="form-control" placeholder="https://wwww.pt.com">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"><b>Email Perusahaan</b></label>
+                                            <div class="col-sm-9">
+                                                <input required name="{{formProfile.email.name}}" maxlength="255" type="email" class="form-control" placeholder="busnies@domain.com">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"><b>Address Perusahaan</b></label>
+                                            <div class="col-sm-9">
+                                                <textarea name="{{formProfile.address.name}}" placeholder="Your Company Address" class="form-control" style="height: 100px;"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"><b>Phone Perusahaan</b></label>
+                                            <div class="col-sm-9">
+                                                <input required oninput="limitDigits(this)" type="number" name="{{formProfile.phone.name}}" placeholder="Your Company Phone" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"><b>Profile Perusahaan</b></label>
+                                            <div class="col-sm-9">
+                                                <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-fall-waterfall-free-image.jpeg?w=600&quality=80" style="margin-bottom: 10px; border-radius:10px;" width="150" height="150">
+                                               <input required name="{{formProfile.file.name}}"  type="file" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label"><b>Tentang</b></label>
+                                            <div class="col-sm-9">
+                                                <input required id="deskripsi" type="hidden" name="{{formProfile.tentang.name}}" class="form-control">
+                                                 <div id="editor" class="form-control" style="height: 300px;">{{profileP.tentang}}</div>
+                                            </div>
+                                            <script>
+                                            const quill = new Quill('#editor', {
+                                              modules: {
+                                                toolbar: [
+                                                  ['bold', 'italic', 'underline'],
+                                                ],
+                                              },
+                                              placeholder: 'Compose an epic...',
+                                              theme: 'snow', // or 'bubble'
+                                            });    
+                                            function limitDigits(input) {
+                                                const maxLength = 12;
+                                                if (input.value.length > maxLength) {
+                                                  input.value = input.value.slice(0, maxLength);
+                                                }
+                                            }   
+                                            form = document.getElementById("forms")
+
+                                            form.addEventListener("submit",(e) => {
+                                                e.preventDefault()
+                                                const content = quill.root.innerHTML
+                                                if (content == "<p><br></p>") {
+                                                    
+                                                }else {
+                                                    document.getElementById("deskripsi").value = content
+                                                }
+                                                form.submit()
+
+                                            })
+                                            </script>
+                                        </div>
+                                        <button type="submit" class="btn btn-dark">Set Profile</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+
                     </div>
                     
 

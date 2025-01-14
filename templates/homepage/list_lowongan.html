@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 {% include 'util/homepage/head_list.html' %}
 <main>
 
@@ -207,29 +208,29 @@
                                     </div>
                                 </div>
                                 <!-- Count of Job list End -->
-                                <!-- single-job-content -->
-                                <div class="single-job-items mb-30">
-                                    <div class="job-items">
-                                        <div class="company-img">
-                                            <a href="{% url 'home:detail_halaman' %}"><img src="{% static 'homepage/assets/img/icon/job-list1.png' %}" alt=""></a>
-                                        </div>
-                                        <div class="job-tittle job-tittle2">
-                                            <a href="{% url 'home:detail_halaman' %}">
-                                                <h4>Digital Marketer</h4>
-                                            </a>
-                                            <ul>
-                                                <li>Creative Agency</li>
-                                                <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                                <li>$3500 - $4000</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="items-link items-link2 f-right">
-                                        <a href="job_details.html">Full Time</a>
-                                        <span>7 hours ago</span>
-                                    </div>
+                                 {% for data in lowongan %}
+                        <!-- single-job-content -->
+                        <div class="single-job-items mb-30">
+                            <div class="job-items">
+                                <div class="company-img">
+                                    <a href="{% url 'home:detail_halaman' slug=data.slug %}">
+                                        <img src="{% static 'homepage/assets/img/icon/job-li' %}st1.png" alt="">
+                                    </a>
                                 </div>
-                                
+                                <div class="job-tittle">
+                                    <a href="{% url 'home:detail_halaman' slug=data.slug %}"><h4>{{data.title}}</h4></a>
+                                    <ul>
+                                        <li>Creative Agency</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{{data.location.name}}</li>
+                                        <li>7 Hours Ago</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items-link f-right">
+                                <a href="{% url 'home:detail_halaman' slug=data.slug %}">Apply</a>
+                            </div>
+                        </div>
+                        {% endfor %}
                             </div>
                         </section>
                         <!-- Featured_job_end -->

@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 {% include 'util/homepage/head_list.html' %}
 
  <main>
@@ -10,7 +11,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2>UI/UX Designer</h2>
+                            <h2>{{detail.category.name}}</h2>
                         </div>
                     </div>
                 </div>
@@ -32,12 +33,16 @@
                                 </div>
                                 <div class="job-tittle">
                                     <a href="#">
-                                        <h4>Digital Marketer</h4>
+                                        <h4>{{detail.title}}</h4>
                                     </a>
                                     <ul>
                                         <li>Creative Agency</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
-                                        <li>$3500 - $4000</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>{{detail.location}}</li>
+                                        {% if detail.is_salary %}
+                                        <li>Gaji Tidak Di Tampilkan</li>
+                                        {% else %}
+                                        <li>Rp. {{detail.salary | rupiah}}</li>
+                                        {% endif %}
                                     </ul>
                                 </div>
                             </div>
@@ -62,12 +67,10 @@
                                <h4>Job Overview</h4>
                            </div>
                           <ul>
-                              <li>Posted date : <span>12 Aug 2019</span></li>
-                              <li>Location : <span>New York</span></li>
-                              <li>Vacancy : <span>02</span></li>
-                              <li>Job nature : <span>Full time</span></li>
-                              <li>Salary :  <span>$7,800 yearly</span></li>
-                              <li>Application date : <span>12 Sep 2020</span></li>
+                              <li>{{detail.created_at}}<i class="fas fa-calendar"></i></li>
+                              <li> {{detail.location.name}}<i class="fas fa-map-marker-alt"></i></li>
+                               <li>{{detail.tipe.name}}<i class="fas fa-briefcase"> </i></li> 
+                              <li>Rp. {{detail.salary | rupiah}}<i class="fas fa-dollar-sign"></i></li>
                           </ul>
                          <div class="apply-btn2">
                             <a href="#" class="btn">Apply Now</a>
