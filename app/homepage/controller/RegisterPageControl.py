@@ -20,7 +20,7 @@ class ControllerRegisPage(AnonymRequiredMixins,TemplateView):
 
 		if form.is_valid():
 			user = form.save()
-			group = Group.objects.get(name="user")
+			group = Group.objects.get(name="users")
 			user.groups.add(group)
 			return redirect("home:register_halaman")
 		else:								

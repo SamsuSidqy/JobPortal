@@ -24,56 +24,87 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-validation">
-                                    <form class="form-valide" action="#" method="post">
+
+                                    <form 
+                                    enctype="multipart/form-data" 
+                                    class="form-valide" action="" method="post">{% csrf_token %}
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-username">Foto Formal<span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <img height="150" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSteItzPyeDKBxyWiOA8xrPZXIlxOYv1b1VVg&s">
-                                                <input type="file" class="d-none" id="val-username" name="val-username" placeholder="Enter a username..">
+                                                {% if profile.photo_formal %}
+                                                <img src="{{profile.photo_formal}}" id="img_photo" height="150">
+                                                {% else %}
+                                                <img style="cursor:pointer;" id="img_photo" height="150" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSteItzPyeDKBxyWiOA8xrPZXIlxOYv1b1VVg&s">
+                                                {% endif %}
+                                                <input name="{{form.file_photo.name}}" type="file" class="d-none" id="photo-formal" name="val-username" placeholder="Enter a username.." 
+                                                >
                                             </div>
+                                            <script>
+                                             let phto = document.getElementById("img_photo")   
+                                             let input = document.getElementById('photo-formal')
+
+                                             phto.addEventListener("click",(e) => {
+                                                input.click()
+                                             })
+
+                                             input.addEventListener("change",(e) => {
+                                                phto.src= URL.createObjectURL(e.target.files[0])
+                                             })
+                                            </script>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-username">Nama Lengkap <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-username" name="val-username" placeholder="Enter a username..">
+                                                <input value="{{profile.complete_name}}" name="{{form.complete_name.name}}" type="text" class="form-control" id="val-username" name="val-username" placeholder="Enter a username..">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-email">Email <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="email" class="form-control" id="val-email" name="val-email" placeholder="Your valid email..">
+                                                <input value="{{profile.email}}" name="{{form.email.name}}" type="email" class="form-control" id="val-email" name="val-email" placeholder="Your valid email..">
                                             </div>
                                         </div>
                                          <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-email">Telepon <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-email" name="val-email" placeholder="Nomor Telepon">
+                                                <input value="{{profile.no_telp}}" oninput="limitDigits(this)" name="{{form.no_telp.name}}" type="number" class="form-control" id="val-email" name="val-email" placeholder="Nomor Telepon">
                                             </div>
                                         </div>
+                                        <script>
+                                            function limitDigits(input) {
+                                                const maxLength = 12;
+                                                if (input.value.length > maxLength) {
+                                                  input.value = input.value.slice(0, maxLength);
+                                                }
+                                            }  
+                                        </script>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-password">Tanggal Lahir <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="date" class="form-control" id="val-password" name="val-password" placeholder="Choose a safe one..">
+                                                <input value="{{profile.date_birth}}" name="{{form.date_birth.name}}" type="date" class="form-control" id="val-password" name="val-password" placeholder="Choose a safe one..">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-confirm-password">Pendidikan Terakhir <span class="text-danger">*</span>
                                             </label>
                                               <div class="col-auto my-1">
-                                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                                                    <option selected="selected">SMK / SMA</option>
-                                                    <option value="1">D1</option>
-                                                    <option value="2">D2</option>
-                                                    <option value="3">D3</option>
-                                                    <option>D4</option>
-                                                    <option>S1</option>
-                                                    <option>S2</option>
-                                                    <option>Doctor</option>
+                                                <select name="{{form.last_education.name}}" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                   <option value="" disabled selected>
+                                                    Pilih Pendidikan Terakhir</option>
+                                                    {% for id,name in form.last_education.field.choices %}
+                                                     {% if forloop.counter > 1 %}
+                                                        <option 
+                                                        {% if profile.last_education == id %}
+                                                        selected ="selected"
+                                                        {% endif %}
+                                                        value="{{ id }}">{{ name }}</option>
+                                                     {% endif %}         
+                                                    {% endfor %}
                                                 </select>
                                             </div>
                                         </div>
@@ -81,14 +112,14 @@
                                             <label class="col-lg-4 col-form-label" for="val-suggestions">Jurusan <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" name="">
+                                                <input value="{{profile.jurusan}}" name="{{form.jurusan.name}}" type="text" class="form-control" name="">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-suggestions">Ceritakan Diri Anda <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <textarea class="form-control"></textarea>
+                                                <textarea name="{{form.about.name}}" class="form-control">{{profile.about}}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -96,7 +127,10 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <span>*pdf</span>
-                                                <input placeholder="*pdf" type="file" class="form-control" id="val-currency" name="val-currency" placeholder="$21.60">
+                                                {% if profile.file_cv %}
+                                                <a href="{{profile.file_cv}}">Your File</a>
+                                                {% endif %}
+                                                <input placeholder="*pdf" name="{{form.file_cv.name}}" type="file" class="form-control" id="val-currency" name="val-currency" placeholder="$21.60">
                                                 <span><a href="#">Open File</a></span>
                                             </div>
                                         </div>
@@ -104,14 +138,14 @@
                                             <label class="col-lg-4 col-form-label" for="val-website">Website 
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-website" name="val-website" placeholder="https://example.com">
+                                                <input value="{{profile.website}}" name="{{form.website.name}}" type="text" class="form-control" id="val-website" placeholder="https://example.com">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-lg-4 col-form-label" for="val-website">Linkedln 
                                             </label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="val-website" name="val-website" placeholder="https://linkedln.com/in/username">
+                                                <input value="{{profile.linkedln}}" name="{{form.linkedln.name}}" type="text" class="form-control" id="val-website" name="val-website" placeholder="https://linkedln.com/in/username">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -119,9 +153,10 @@
                                             </label>
                                             <div class="col-lg-6" id="tags-input" style="padding: 15px; position: relative;">
                                             <div class="tags-wrapper" style="border: 1px solid #ccc; border-radius: 4px; padding: 5px; display: flex; flex-wrap: wrap; gap: 5px;">
-                                                <input type="text" style="flex: 1; border: none; outline: none; padding: 5px;" class="form-control" id="tags" name="val-website" placeholder="Skills Anda">
+                                                <span style="display: inline-flex; align-items: center; background: rgb(0, 173, 255); color: white; padding: 5px; border-radius: 3px; margin-right: 5px;">My Skiils</span>
+                                                <input type="text" style="flex: 1; border: none; outline: none; padding: 5px;" class="form-control" id="tags" name="val-website" placeholder="Skills Anda (Enter)">
                                             </div>
-                                            <input type="hidden" class="form-control" id="tags-value" name="tags" />
+                                            <input type="hidden" value="{{profile.complete_name}}" class="form-control" id="tags-value" name="{{form.skills.name}}" />
                                         </div>
                                         <script>
                                         document.addEventListener('DOMContentLoaded', function () {
@@ -175,14 +210,7 @@
                                         </script>
                                         </div>                                        
                                        
-                                        <div class="form-group row">
-                                            <label class="col-lg-4 col-form-label"><a href="#">Terms &amp; Conditions</a>  <span class="text-danger">*</span>
-                                            </label>
-                                            <div class="col-lg-8">
-                                                <label class="css-control css-control-primary css-checkbox" for="val-terms">
-                                                    <input type="checkbox" class="css-control-input" id="val-terms" name="val-terms" value="1"> <span class="css-control-indicator"></span> I agree to the terms</label>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="form-group row">
                                             <div class="col-lg-8 ml-auto">
                                                 <button type="submit" class="btn btn-primary">Submit</button>

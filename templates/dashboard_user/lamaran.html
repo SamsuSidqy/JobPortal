@@ -19,6 +19,7 @@
             <div class="container-fluid">
                  <div class="col-md-12">
                         <div class="card">
+                            {% if apply.count %}
                             <div class="card-body">
                                 <h4 class="card-title">
                                     <i class="ti-receipt"></i> &nbsp; Web Developer || Fullstack
@@ -133,6 +134,18 @@
                                     </div>
                                 </div>
                             </div>
+                            {% else %}
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    &nbsp; You Not Apply Yet
+                                </h4>
+                                
+                                    
+                                    
+                                </div>
+                            </div>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>

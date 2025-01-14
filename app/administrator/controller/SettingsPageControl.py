@@ -39,9 +39,12 @@ class ControllerSettingsPage(LoginRequiredMixin,AdminGroupRequiredMixins,Templat
 			form = FormSettingsDisabled(req.POST, instance=instanceDisabled)
 
 		if form.is_valid():
-			form.save()
+			instance = form.save(commit=False)
+			instance.images = form.cleaned_data.get("file")
+			instance.save()
 			messages.success(req,"Profile Di Ubah" if types == "profile" else "Settings Telah Di Ubah")
 			return redirect("admins:admin_settings")
 		else:
+			print(form.errors)
 			messages.info(req,"Profile Gagal Di Ubah" if types == "profile" else "Settings Gagal Di Ubah")
 			return redirect("admins:admin_settings")

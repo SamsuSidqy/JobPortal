@@ -12,16 +12,17 @@ class FormProfile(forms.ModelForm):
 
 
 
-	def clean_images(self):
+	def clean_file(self):
 		file = self.cleaned_data.get("file")
-		text = self.cleaned_data.get("images")
+		nameFile = None
 		if file:
-			print(True)
-			print(file.size)
-			print(file.content_type)
-			print(settings.ROOT_MEDIA)
-			sett = Image.open(file)
-			nameFile = file.content_type.split("/").pop()
-			sett.save(f"{settings.ROOT_MEDIA}/{uuid4()}.{nameFile}")
-			self.text = nameFile
-		return text
+			try:
+				sett = Image.open(file)
+				typeFile = file.content_type.split("/").pop()
+				nameFile = f"{uuid4()}.{typeFile}"
+				sett.save(f"{settings.ROOT_MEDIA}/{nameFile}")
+			except Exception as e:
+				print(e)
+				raise forms.ValidationError("Image Failed")
+		
+		return nameFile

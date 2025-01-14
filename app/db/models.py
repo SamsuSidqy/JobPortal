@@ -136,7 +136,7 @@ class ProfilePerusahaan(models.Model):
 	email = models.CharField(max_length=255)
 	phone = models.CharField(max_length=12)
 	address = models.TextField()
-	images = models.TextField(null=True)
+	images = models.TextField(null=True,blank=True)
 
 	class Meta:
 		permissions = [

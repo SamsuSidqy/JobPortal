@@ -139,39 +139,44 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label"><b>Website Perusahaan</b></label>
                                             <div class="col-sm-9">
-                                                <input required name="{{formProfile.web.name}}" value="{{profileP.website}}" maxlength="255" type="text" class="form-control" placeholder="https://wwww.pt.com">
+                                                <input required name="{{formProfile.web.name}}"  maxlength="255" type="text" class="form-control" value="{{profileP.web}}" placeholder="https://wwww.pt.com">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label"><b>Email Perusahaan</b></label>
                                             <div class="col-sm-9">
-                                                <input required name="{{formProfile.email.name}}" maxlength="255" type="email" class="form-control" placeholder="busnies@domain.com">
+                                                <input required name="{{formProfile.email.name}}" maxlength="255" value="{{profileP.email}}" type="email" class="form-control" placeholder="busnies@domain.com">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label"><b>Address Perusahaan</b></label>
                                             <div class="col-sm-9">
-                                                <textarea name="{{formProfile.address.name}}" placeholder="Your Company Address" class="form-control" style="height: 100px;"></textarea>
+                                                <input name="{{formProfile.address.name}}" placeholder="Your Company Address" class="form-control" value="{{profileP.address}}" />
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label"><b>Phone Perusahaan</b></label>
                                             <div class="col-sm-9">
-                                                <input required oninput="limitDigits(this)" type="number" name="{{formProfile.phone.name}}" placeholder="Your Company Phone" class="form-control"/>
+                                                <input required oninput="limitDigits(this)" type="number" value="{{profileP.phone}}" name="{{formProfile.phone.name}}" placeholder="Your Company Phone" class="form-control"/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label"><b>Profile Perusahaan</b></label>
                                             <div class="col-sm-9">
                                                 <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-fall-waterfall-free-image.jpeg?w=600&quality=80" style="margin-bottom: 10px; border-radius:10px;" width="150" height="150">
-                                               <input required name="{{formProfile.file.name}}"  type="file" class="form-control">
+                                               <input name="{{formProfile.file.name}}"  type="file" class="form-control">
+                                               <input type="hidden" value="" name="{{formProfile.images.name}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label"><b>Tentang</b></label>
                                             <div class="col-sm-9">
                                                 <input required id="deskripsi" type="hidden" name="{{formProfile.tentang.name}}" class="form-control">
-                                                 <div id="editor" class="form-control" style="height: 300px;">{{profileP.tentang}}</div>
+                                                 <div id="editor" class="form-control" style="height: 300px;">
+                                                 {% autoescape off %}    
+                                                 {{profileP.tentang}}
+                                                 {% endautoescape %}
+                                                 </div>
                                             </div>
                                             <script>
                                             const quill = new Quill('#editor', {

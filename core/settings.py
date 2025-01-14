@@ -112,6 +112,8 @@ USE_TZ = True
 
 STATIC_URL = 'assets/'
 ROOT_MEDIA = BASE_DIR / 'assets/media/'
+CV_MEDIA = BASE_DIR / 'assets/cv/'
+PHOTO_FORMAT = BASE_DIR / 'assets/photo_format/'
 STATICFILES_DIRS = [
     BASE_DIR / "assets",
     "/var/www/static/",

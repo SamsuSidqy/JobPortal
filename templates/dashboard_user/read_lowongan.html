@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load custom_filters %}
 {% include 'util/dashboard_user/head.html' %}
  <!--**********************************
             Content body start
@@ -19,10 +19,16 @@
             <div class="container-fluid">
                  <div class="col-md-12">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" >
                                 <h4 class="card-title">
-                                    <i class="ti-receipt"></i> &nbsp; Web Developer || Fullstack
-                                    &nbsp;&nbsp; <i class="ti-pulse"> Rp. 5.000.000 - Rp. 10.000.000</i>
+                                    <i class="ti-receipt"></i> &nbsp; {{detail.title}}
+                                    &nbsp;&nbsp; <i class="ti-pulse"> 
+                                    {% if detail.is_salary %} 
+                                    Gaji Tidak Ditampilkan
+                                    {% else %}
+                                    Rp. {{detail.salary | rupiah}}
+                                    {% endif %}
+                                    </i>
                                 </h4>
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs mb-3" role="tablist">
@@ -33,38 +39,12 @@
                                     </li>
                                 </ul>
                                 <!-- Tab panes -->
-                                <div class="tab-content tabcontent-border">
+                                <div class="tab-content tabcontent-border" id="container">
                                     <div class="tab-pane  show active fade" id="messages8" role="tabpanel">
-                                        <div class="p-t-15">
-                                            <div class="small-section-tittle">
-                                                <h4>Job Description</h4>
-                                            </div>
-                                             <p>It is a long established fact that a reader will beff distracted by vbthe creadable content of a page when looking at its layout. The pointf of using Lorem Ipsum is that it has ahf mcore or-lgess normal distribution of letters, as opposed to using, Content here content here making it look like readable.</p>
-                                             <div class="small-section-tittle">
-                                                <h4>Required Knowledge, Skills, and Abilities</h4>
-                                            </div>
-                                               <ul class="list-icons">
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                               </ul>
+                                        <div class="p-15">
+
+                                            {{detail.description | safe}}
+                                            
                                         <form>
                                             <div class="alert alert-danger">
                                                 Lengkapi Resume Terlebih Dahulu
@@ -73,7 +53,19 @@
                                         </form>   
                                         </div>
                                     </div>
-                                    
+                                <script>
+                                  let container = document.getElementById("container")
+                                  const olElements = container.querySelectorAll('ol');
+                                  const liElements = container.querySelectorAll('li')  
+
+                                  olElements.forEach(e => {
+                                    e.style.listStyleType = "disc"
+                                  })
+                                  liElements.forEach(e => {
+                                    e.style.listStyleType = "disc"
+                                  })
+
+                                </script>    
                                 </div>
                             </div>
                         </div>

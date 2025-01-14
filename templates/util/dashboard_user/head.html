@@ -58,14 +58,18 @@
     .progress li .label {
       margin-top: 8px;
     }
+    
   </style>
 
 <body>
+{% if user.is_verify %}    
+{% else %}
 <div class="alert alert-danger">
     Email Anda Belum Terverivikasi
     <a href="#" class="alert-link">Here</a>. Klik Untuk Verifikasi Email
 </div>
- 
+{% endif %}
+
     <!--*******************
         Preloader start
     ********************-->
@@ -123,51 +127,33 @@
                        
                         <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                                 <i class="mdi mdi-bell-outline"></i>
-                                <span class="badge badge-pill gradient-2 badge-primary">3</span>
+                                {% if notif.count %}
+                                <span style="color: #fff;" class="badge nav-text badge-pill badge-info">{{notif.count}}</span>
+                                {% endif %}
                             </a>
                             <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
-                                <div class="dropdown-content-heading d-flex justify-content-between">
-                                    <span class="">2 New Notifications</span>  
-                                    
+                            <div class="dropdown-content-heading d-flex justify-content-between">
+                                {% if notif.count %}
+                                <span class="">{{notif.count}} Notifications</span>  
+                                {% else %}
+                                <span>You Don't Have Notification</span>
+                                {% endif %}
+
                                 </div>
                                 <div class="dropdown-content-body">
                                     <ul>
+                                        {%  for data in notif %}
                                         <li>
                                             <a href="javascript:void()">
                                                 <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
                                                 <div class="notification-content">
-                                                    <h6 class="notification-heading">Events near you</h6>
+                                                    <h6 class="notification-heading">{{notif.subject}}</h6>
                                                     <span class="notification-text">Within next 5 days</span> 
                                                 </div>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Event Started</h6>
-                                                    <span class="notification-text">One hour ago</span> 
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Event Ended Successfully</h6>
-                                                    <span class="notification-text">One hour ago</span>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void()">
-                                                <span class="mr-3 avatar-icon bg-danger-lighten-2"><i class="icon-present"></i></span>
-                                                <div class="notification-content">
-                                                    <h6 class="notification-heading">Events to Join</h6>
-                                                    <span class="notification-text">After two days</span> 
-                                                </div>
-                                            </a>
-                                        </li>
+                                        {% endfor %}
+                                        
                                     </ul>
                                     
                                 </div>
@@ -207,7 +193,9 @@
                         <a href="{% url 'pelamar:pelamar_apply' %}"  aria-expanded="false">
                             <i class="icon-note menu-icon"></i>
                             <span class="nav-text">Lamaran Saya</span>
-                             <span style="color: #fff;" class="badge nav-text badge-pill badge-info">3</span>
+                            {% if apply.count %}
+                             <span style="color: #fff;" class="badge nav-text badge-pill badge-info">{{apply.count}}</span>
+                            {% endif %}
                         </a>
                     </li>
                      <li>
@@ -218,7 +206,9 @@
                      <li>
                         <a href="{% url 'pelamar:pelamar_notif' %}" aria-expanded="false">
                             <i class="icon-bell menu-icon"></i><span class="nav-text">Notification</span>
-                            <span style="color: #fff;" class="badge nav-text badge-pill badge-info">3</span>
+                            {% if notif.count %}
+                            <span style="color: #fff;" class="badge nav-text badge-pill badge-info">{{notif.count}}</span>
+                            {% endif %}
                         </a>
                     </li>
                     <li>

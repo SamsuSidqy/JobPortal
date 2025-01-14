@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 
 # Model
-from db.models import Lowongan,ApplyLowongan
+from db.models import Lowongan,ApplyLowongan,ProfilePerusahaan
 
 class ControllerDetailPage(TemplateView):
 
@@ -12,6 +12,7 @@ class ControllerDetailPage(TemplateView):
 	def get(self,req,*args,**kwargs):
 		data = get_object_or_404(Lowongan,slug=kwargs.get("slug"),is_close=False)
 		Apply = ApplyLowongan.objects.filter(to=data)
-		self.context['detail'] = data		
+		self.context['detail'] = data
+		self.context['profileP'] = ProfilePerusahaan.objects.first()
 		return render(req,"homepage/detail_lowongan.html",self.context)
 
