@@ -6,6 +6,8 @@ from pelamar.controller.NotificationPageControl import ControllerNotificationPag
 from pelamar.controller.ReadNotificationPageControl import ControllerReadNotificationPage
 from pelamar.controller.ReadLowonganPageControl import ControllerReadLowonganPage
 from pelamar.controller.LowonganPageControl import ControllerLowonganPage
+from pelamar.controller.ReadFoto import ReadFotoController
+from pelamar.controller.ReadCv import ReadCVController
 
 app_name = "pelamar"
 
@@ -16,5 +18,6 @@ urlpatterns = [
 	path("read/<str:slug>/",ControllerReadNotificationPage.as_view(),name="pelamar_read_notif"),
 	path("apply/",ControllerLowonganPage.as_view(),name="pelamar_lowongan"),
 	path("apply/<str:slug>/",ControllerReadLowonganPage.as_view(),name="pelamar_read_lowongan"),
-
+	path("resume/photo/<str:file>",ReadFotoController.as_view(),name="photo_pelamar"),
+	path("resume/cv/<str:file>",ReadCVController.as_view(),name='cv_pelamar'),
 ]

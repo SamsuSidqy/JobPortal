@@ -30,6 +30,11 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{data.title}}</h5>
                                         <br>
+                                        {% if data.is_salary %}
+                                        <p><b>Rp.</b> 25.000.000 / Month</p>
+                                        {% else %}
+                                        <p><b>Gaji Tidak Di Tampilkan</b></p>
+                                        {% endif %}
                                         <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-warning">Apply</a>
                                     </div>
                                     <div class="card-footer"><small>Last updateed 3 min ago</small>

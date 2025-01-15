@@ -7,7 +7,7 @@ from pypdf import PdfReader, PdfWriter
 
 class FormResume(forms.ModelForm):
 	file_photo = forms.FileField(required=False)
-	file_cv = forms.FileField(required=False)
+	files_cv = forms.FileField(required=False)
 	class Meta:
 		model = Pengguna
 		fields = [
@@ -20,7 +20,8 @@ class FormResume(forms.ModelForm):
 			'jurusan',
 			'about',
 			'linkedln',
-			'website'
+			'website',
+			
 		]
 
 
@@ -28,11 +29,13 @@ class FormResume(forms.ModelForm):
 		file = self.cleaned_data.get("file_photo")
 		nameFile = None
 		if file:
+			print("Save File Foto")
 			try:
 				sett = Image.open(file)
 				typeFile = file.content_type.split("/").pop()
 				nameFile = f"{uuid4()}.{typeFile}"
 				sett.save(f"{settings.PHOTO_FORMAT}/{nameFile}")
+				print("Save Photo Success")
 			except Exception as e:
 				print(e)
 				raise forms.ValidationError("Image Failed")
@@ -40,11 +43,15 @@ class FormResume(forms.ModelForm):
 		return nameFile
 
 
-	def clean_file_cv(self):
-		file = self.cleaned_data.get("file_cv")
+	
+		return "aaa"
+
+	def clean_files_cv(self):
+		file = self.cleaned_data.get("files_cv")
 		nameFile = None
 
 		if file:
+			print("Save File CV")
 			try:
 				reader = PdfReader(file)
 				writer = PdfWriter()

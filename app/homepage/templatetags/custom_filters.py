@@ -1,5 +1,5 @@
 from django import template
-
+import datetime
 register = template.Library()
 
 @register.filter
@@ -17,4 +17,15 @@ def rupiah(value):
 		return "{:,}".format(int(value))
 
 	except (ValueError,TypeError):
+		return 0
+
+
+@register.filter
+def inputDate(value):
+	print(value)
+	try:
+		date = datetime.datetime.fromtimestamp(int(value))
+		return date.strftime("%Y-%m-%d")
+	except Exception as e:
+		print(e)
 		return 0

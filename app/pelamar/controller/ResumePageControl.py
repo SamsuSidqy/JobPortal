@@ -20,15 +20,22 @@ class ControllerResumePage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateVi
 		return render(req,self.template_name,self.context)
 
 	def post(self,req,*args,**kwargs):
-		print(req.POST)
-		print(req.FILES)
+		
 		instances = Pengguna.objects.get(id=req.user.id)
 		form = FormResume(req.POST,req.FILES,instance=instances)
 
 		if form.is_valid():
+			
 			instance = form.save(commit=False)
-			instance.photo_formal = form.cleaned_data.get("file_photo")
-			instance.file_cv = form.cleaned_data.get("file_cv")
+			filePhoto = req.FILES.get('file_photo') 
+			fileCV = req.FILES.get('files_cv')
+			if filePhoto:
+				print("Ada Photo")
+				instance.photo_formal = form.cleaned_data.get("file_photo")
+			if fileCV:
+				print("Ada CV")
+				instance.file_cv = form.cleaned_data.get("files_cv")
+
 			instance.save()
 			messages.success(req,"Resume Berhasil Di Perbaruhi")
 			return redirect("pelamar:pelamar_resume")
@@ -37,4 +44,5 @@ class ControllerResumePage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateVi
 				"form":form,
 				"profile":Pengguna.objects.get(id=req.user.id),
 			}
+			print(form.errors)
 			return render(req,self.template_name,context)
