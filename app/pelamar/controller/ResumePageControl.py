@@ -44,5 +44,5 @@ class ControllerResumePage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateVi
 				"form":form,
 				"profile":Pengguna.objects.get(id=req.user.id),
 			}
-			print(form.errors)
+			messages.info(req,"Resume Gagal Di Perbaruhi")
 			return render(req,self.template_name,context)

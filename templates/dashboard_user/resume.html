@@ -22,6 +22,14 @@
                  <div class="row justify-content-center">
                     <div class="col-lg-12">
                         <div class="card">
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert {% if message.tags == 'info' %} alert-warning {% else %} alert-success {% endif %} alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                            </button> 
+                            <strong>{{ message }}</strong></div>
+                            {% endfor %}
+                            {% endif %}
                             <div class="card-body">
                                 <div class="form-validation">
 
@@ -34,7 +42,8 @@
                                             <div class="col-lg-6">
                                                 {% if profile.photo_formal %}
                                                 <img 
-                                                src="{% url 'pelamar:photo_pelamar' file=profile.photo_formal %}" id="img_photo" height="150" style="cursor:pointer;">
+                                                src="{% url 'pelamar:photo_pelamar' file=profile.photo_formal %}" id="img_photo" height="150" style="cursor:pointer; border:1px solid black;
+                                                border-radius: 15px;">
                                                 {% else %}
                                                 <img style="cursor:pointer;" id="img_photo" height="150" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSteItzPyeDKBxyWiOA8xrPZXIlxOYv1b1VVg&s">
                                                 {% endif %}
@@ -160,13 +169,16 @@
                                             <div class="col-lg-6">
                                                 <span>*pdf</span>
                                                 {% if profile.file_cv %}
-                                                <a 
-                                                target="_blank" 
-                                                href="{% url 'pelamar:cv_pelamar' file=profile.file_cv %}">Your File</a>
+                                               
                                                 {% endif %}
                                                 <input accept="application/pdf" placeholder="*pdf" 
                                                 name="{{form.files_cv.name}}" type="file" class="form-control" id="val-currency"  placeholder="$21.60">
-                                                <span><a href="#">Open File</a></span>
+                                                <span><a 
+                                                     target="_blank" 
+                                                href="{% url 'pelamar:cv_pelamar' file=profile.file_cv %}"
+                                                    href="#" class="text-primary">Open File &nbsp;</a>
+                                                ({{profile.file_cv}})   
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -192,65 +204,88 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label class="col-lg-4 col-form-label" for="val-website">
+                                            </label>
+                                             <div class="col-lg-6" id="tags-input" style="padding: 15px; position: relative;">
+                                                <div id="tagsWraper" class="tags-wrapper" style="border: 1px solid #ccc; border-radius: 4px; padding: 5px; display: flex; flex-wrap: wrap; gap: 5px;">
+                                                     
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row" style="margin-top: -40px ;">
                                             <label class="col-lg-4 col-form-label" for="val-skill">Skill
                                             </label>
                                             <div class="col-lg-6" id="tags-input" style="padding: 15px; position: relative;">
-                                            <div class="tags-wrapper" style="border: 1px solid #ccc; border-radius: 4px; padding: 5px; display: flex; flex-wrap: wrap; gap: 5px;">
-                                                <span style="display: inline-flex; align-items: center; background: rgb(0, 173, 255); color: white; padding: 5px; border-radius: 3px; margin-right: 5px;">My Skiils</span>
+                                            <div  style="border: 1px solid #ccc; border-radius: 4px; padding: 5px; display: flex; flex-wrap: wrap; gap: 5px;">                                                
                                                 <input type="text" style="flex: 1; border: none; outline: none; padding: 5px;" class="form-control" id="tags"  placeholder="Skills Anda (Enter)">
                                             </div>
-                                            <input type="hidden" value="{{profile.complete_name}}" class="form-control" id="tags-value" name="{{form.skills.name}}" />
+                                            <input type="hidden" class="form-control" id="tags-value" name="{{form.skills.name}}"
+                                            {% if profile.skills %}
+                                            value="{{profile.skills}}"
+                                            {% endif %}
+                                             />                                            
                                         </div>
+
+
                                         <script>
-                                        document.addEventListener('DOMContentLoaded', function () {
+                                        
                                             const tagsWrapper = document.querySelector('.tags-wrapper');
-                                            const tagsValue = document.getElementById('tags-value');
-                                            const input = document.getElementById('tags');
-                                            const dataSkiils = "{{profile.skills}}"
-                                            console.log(dataSkiils)
-                                            input.addEventListener('keydown', function (e) {
-                                                if (e.key === 'Enter' && input.value.trim() !== '') {
+                                            const tagsValues = document.getElementById('tags-value');
+                                            const inputs = document.getElementById('tags');
+                                            let datadefaults = tagsValues.value.split(",")
+                                            let str = ''
+                                            datadefaults.forEach(e => {
+                                                str += `
+                                                    <span data=${e} id="skils${e}" style="display: inline-flex; align-items: center; background: rgb(0, 173, 255); color: white; padding: 5px; border-radius: 3px; margin-right: 5px;">${e}
+                                                        <span
+                                                        style="margin-left: 10px;cursor:pointer;"
+                                                        onclick="deleteSkils('${e}')"
+                                                        >
+                                                            X
+                                                        </span>
+                                                    </span>
+                                                `
+                                                tagsWrapper.innerHTML = str
+                                            })
+
+                                            inputs.addEventListener('keydown', function (e) {
+                                                if (e.key === 'Enter' && inputs.value.trim() !== '') {
                                                     e.preventDefault();
+                                                    let element = `
+                                                        <span data=${inputs.value} id="skils${inputs.value}" style="display: inline-flex; align-items: center; background: rgb(0, 173, 255); color: white; padding: 5px; border-radius: 3px; margin-right: 5px;">${inputs.value}
+                                                            <span
+                                                            style="margin-left:10px;cursor:pointer;"
+                                                            id="closeSkils"
+                                                            onclick="deleteSkils('${inputs.value}')"
+                                                            >
+                                                                X
+                                                            </span>
+                                                        </span>
+                                                    `
+                                                    tagss = document.getElementById("tagsWraper")
+                                                    tagss.insertAdjacentHTML('beforeend',element)
+                                                    datadefaults.push(inputs.value)
 
-                                                    const tag = document.createElement('span');
-                                                    tag.classList.add('label', 'label-info');
-                                                    tag.style.display = 'inline-flex';
-                                                    tag.style.alignItems = 'center';
-                                                    tag.style.background = '#007bff';
-                                                    tag.style.color = 'white';
-                                                    tag.style.padding = '5px 5px';
-                                                    tag.style.borderRadius = '3px';
-                                                    tag.style.marginRight = '5px';
+                                                    tagsValues.value = datadefaults.join(",")
+                                                    inputs.value = ""
 
-                                                    tag.textContent = input.value.trim();
 
-                                                    const removeSpan = document.createElement('span');
-                                                    removeSpan.textContent = 'X';
-                                                    removeSpan.style.cursor = 'pointer';
-                                                    removeSpan.style.color = 'white';
-                                                    removeSpan.style.marginLeft = '8px';
-                                                    removeSpan.style.fontWeight = 'bold';
-
-                                                    removeSpan.addEventListener('click', function () {
-                                                        tag.remove();
-                                                        updateTagsValue();
-                                                    });
-
-                                                    tag.appendChild(removeSpan);
-                                                    tagsWrapper.insertBefore(tag, input);
-                                                    input.value = ''; // Clear the input field
-                                                    updateTagsValue();
                                                 }
                                             });
+                                         let datadefault = []   
+                                         const tagsValue = document.getElementById('tags-value')
+                                         const wraper = document.getElementById("tagsWraper")
+                                         let span = wraper.querySelectorAll("span")
+                                         console.log(span)
 
-                                            function updateTagsValue() {
-                                                const tags = [];
-                                                tagsWrapper.querySelectorAll('span.label-info').forEach(tag => {
-                                                    tags.push(tag.textContent.replace('X', '').trim());
-                                                });
-                                                tagsValue.value = tags.join(',');
+                                         const deleteSkils = (e) => {
+                                            let element = document.getElementById(`skils${e}`)
+                                            if(element){
+                                                element.remove()
                                             }
-                                        });
+                                            datadefaults = datadefaults.filter(data => data !== e )
+                                            tagsValues.value = datadefaults.join(",")
+                                         }
                                         </script>
                                         </div>                                        
                                        
