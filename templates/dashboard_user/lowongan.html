@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load custom_filters %}
 {% include 'util/dashboard_user/head.html' %}
 
 
@@ -28,14 +28,22 @@
                                 <div class="card border-warning">
                                     <div class="card-header"><i class="ti-infinite">&nbsp; {{data.category.name}}</i></div>
                                     <div class="card-body">
-                                        <h5 class="card-title">{{data.title}}</h5>
+                                        <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" >
+                                            <h5 class="card-title">{{data.title}}</h5>
+                                        </a>
                                         <br>
                                         {% if data.is_salary %}
                                         <p><b>Rp.</b> 25.000.000 / Month</p>
                                         {% else %}
                                         <p><b>Gaji Tidak Di Tampilkan</b></p>
                                         {% endif %}
-                                        <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-warning">Apply</a>
+                                        {% if request.user|checkApply:data %}
+                                            <button disabled class="btn btn-info">
+                                                Anda Sudah Mengirim Lamaran Ini
+                                            </button>
+                                        {% else %}
+                                        <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-success">Apply</a>
+                                        {% endif %}
                                     </div>
                                     <div class="card-footer"><small>Last updateed 3 min ago</small>
                                     </div>

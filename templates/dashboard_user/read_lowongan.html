@@ -29,6 +29,7 @@
                                     Rp. {{detail.salary | rupiah}}
                                     {% endif %}
                                     </i>
+
                                 </h4>
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs mb-3" role="tablist">
@@ -45,10 +46,30 @@
 
                                             {{detail.description | safe}}
                                             
-                                        <form>
+                                        <form 
+                                        {% if request.user|checkApply:detail %}
+                                        {% else %}
+                                        method="POST" action=""
+                                        {% endif %}
+                                        >{% csrf_token %}
+                                            {% if request.user|checkResume %}
+
+                                            {% if request.user|checkApply:detail %}
+                                             <div class="alert alert-info">
+                                                Anda Sudah Mengirim Lamaran Ini
+                                            </div>
+                                            {% else %}
+
+                                            <input type="hidden" value="{{detail.id}}" name="lowongan">
+                                            <button class="btn btn-outline-secondary sweet-confirm">Apply Lamaran</button>
+
+                                            {% endif %}
+
+                                            {% else %}
                                             <div class="alert alert-danger">
                                                 Lengkapi Resume Terlebih Dahulu
-                                            </div>
+                                            </div>                                            
+                                            {% endif %}
                                             <!-- <button class="btn mb-1 btn-outline-secondary">Kirim Lamaran</button> -->
                                         </form>   
                                         </div>

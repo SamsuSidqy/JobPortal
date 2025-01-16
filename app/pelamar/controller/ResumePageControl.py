@@ -7,7 +7,8 @@ from django.contrib import messages
 
 
 # 
-from db.models import Pengguna
+from db.models import Pengguna,ApplyLowongan,Notification
+
 class ControllerResumePage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateView):
 	redirect_field_name = None
 	login_url = 'home:login_halaman'
@@ -17,6 +18,8 @@ class ControllerResumePage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateVi
 	def get(self,req,*args,**kwargs):
 		self.context['form'] = FormResume
 		self.context['profile'] = Pengguna.objects.get(id=req.user.id)
+		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user)
+		self.context['notif'] = Notification.objects.filter(accept_to=req.user)
 		return render(req,self.template_name,self.context)
 
 	def post(self,req,*args,**kwargs):
@@ -43,6 +46,8 @@ class ControllerResumePage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateVi
 			context = {
 				"form":form,
 				"profile":Pengguna.objects.get(id=req.user.id),
+				'apply' : ApplyLowongan.objects.filter(user=req.user),
+				'notif' : Notification.objects.filter(accept_to=req.user),
 			}
 			messages.info(req,"Resume Gagal Di Perbaruhi")
 			return render(req,self.template_name,context)

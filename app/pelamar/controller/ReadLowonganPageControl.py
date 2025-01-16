@@ -1,10 +1,10 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from django.views.generic import TemplateView
 from pelamar.unit.customMiddleware.mixins import UserGroupRequiredMixins
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Model
-from db.models import ApplyLowongan,Notification,Lowongan
+from db.models import ApplyLowongan,Notification,Lowongan, Pengguna
 
 class ControllerReadLowonganPage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateView):
 	redirect_field_name = None
@@ -14,4 +14,16 @@ class ControllerReadLowonganPage(LoginRequiredMixin,UserGroupRequiredMixins,Temp
 	def get(self,req,*args,**kwargs):
 		data = get_object_or_404(Lowongan,slug=kwargs.get("slug"))
 		self.context['detail'] = data
+		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user)
+		self.context['notif'] = Notification.objects.filter(accept_to=req.user)
 		return render(req,"dashboard_user/read_lowongan.html",self.context)
+
+
+	def post(self,req,*args,**kwargs):
+		idLowongan = req.POST.get("lowongan")
+		applyLowongan = ApplyLowongan.objects.create(
+			to=Lowongan.objects.get(id=idLowongan),
+			user=Pengguna.objects.get(id=req.user.id)
+			)
+		print(applyLowongan)
+		return redirect("pelamar:pelamar_lowongan")

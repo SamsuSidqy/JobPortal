@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load custom_filters %}
 {% include 'util/dashboard_user/head.html' %}
   <!--**********************************
             Content body start
@@ -18,31 +18,60 @@
 
             <div class="container-fluid">
                  <div class="col-md-12">
-                        <div class="card">
-                            {% if apply.count %}
-                            <div class="card-body">
+                        {% if apply.count %}
+                        {% for data in apply %}
+                        <div class="card" >
+                              <div class="card-body">
                                 <h4 class="card-title">
-                                    <i class="ti-receipt"></i> &nbsp; Web Developer || Fullstack
+                                    <i class="ti-receipt"></i> &nbsp; {{data.to.title}}
+                                     &nbsp;&nbsp; <i class="ti-pulse"> 
+                                    {% if data.to.is_salary %} 
+                                    Gaji Tidak Ditampilkan
+                                    {% else %}
+                                    Rp. {{data.to.salary | rupiah}}
+                                    {% endif %}
+                                    </i>
                                 </h4>
                                 <!-- Nav tabs -->
-                                <ul class="nav nav-tabs mb-3" role="tablist">
+                                <ul style="list-style-type: none;" class="nav nav-tabs mb-3" role="tablist">
                                     </li>
-                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#messages8"><span><i class="ti-stats-up"></i>&nbsp;&nbsp;
+                                    <li  class="nav-item"><a class="nav-link active" data-toggle="tab" href="#lamaran{{data.to.id}}"><span><i class="ti-stats-up"></i>&nbsp;&nbsp;
                                         Status Lamaran
                                     </span></a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#home8"><span><i class="ti-archive"></i>&nbsp;&nbsp; Data Lowongan</span></a>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#lowongan{{data.to.id}}"><span><i class="ti-archive"></i>&nbsp;&nbsp; Data Lowongan</span></a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#profile8"><span><i class="ti-archive"></i>&nbsp;&nbsp; Jadwal Interview</span></a>
+                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#interview{{data.to.id}}"><span><i class="ti-archive"></i>&nbsp;&nbsp; Jadwal Interview</span></a>
                                     </li>
                                 </ul>
                                 <!-- Tab panes -->
-                                <div class="tab-content tabcontent-border">
-                                    <div class="tab-pane  show active fade" id="messages8" role="tabpanel">
+                                <div class="tab-content tabcontent-border" >
+                                    <div class="tab-pane  show active fade" id="lamaran{{data.to.id}}" role="tabpanel">
                                         <div class="p-t-15">
                                             <ul>
+                                              {% if data.status == 1 %}
                                                 <li style="display: inline;">
                                                     <span class="label label-success">Apply</span>  
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <i class="ti-angle-double-right"></i>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                </li>
+                                              {% elif data.status == 2 %}
+                                                <li style="display: inline;">
+                                                    <span class="label" style="background: grey; color:#fff;">Apply</span>  
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <i class="ti-angle-double-right"></i>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                </li>
+                                                <li style="display: inline;">
+                                                     <span class="label label-success" style="color:#fff;">Process</span>  
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <i class="ti-angle-double-right"></i>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                </li>
+                                              {% elif data.status == 3 %}  
+                                              <li style="display: inline;">
+                                                    <span class="label" style="background: grey; color:#fff;">Apply</span>  
                                                     &nbsp;&nbsp;&nbsp;
                                                     <i class="ti-angle-double-right"></i>
                                                     &nbsp;&nbsp;&nbsp;
@@ -54,60 +83,38 @@
                                                     &nbsp;&nbsp;&nbsp;
                                                 </li>
                                                 <li style="display: inline;">
-                                                     <span class="label" style="background: grey; color:#fff;">Interview</span>           
+                                                     <span class="label label-success">Interview</span>           
                                                 </li>
+                                                {% else %}
+                                                {% endif %}
                                             </ul>
                                             <br>
                                             
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade " id="home8" role="tabpanel">
+                                    <div class="tab-pane fade containerLowongan" id="lowongan{{data.to.id}}" role="tabpanel">
                                         <div class="p-t-15">
                                             <div class="small-section-tittle">
                                                 <h4>Job Description</h4>
                                             </div>
-                                             <p>It is a long established fact that a reader will beff distracted by vbthe creadable content of a page when looking at its layout. The pointf of using Lorem Ipsum is that it has ahf mcore or-lgess normal distribution of letters, as opposed to using, Content here content here making it look like readable.</p>
-                                             <div class="small-section-tittle">
-                                                <h4>Required Knowledge, Skills, and Abilities</h4>
-                                            </div>
-                                               <ul class="list-icons">
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                                   <li>
-                                                    <i class="ti-control-forward"></i>
-                                                   <b> System Software Development </b>
-                                                   </li>
-                                               </ul>
+                                            {{data.to.description | safe}}
                                         </div>
+                                        
                                     </div>
-                                    <div class="tab-pane fade" id="profile8" role="tabpanel">
+                                    <div class="tab-pane fade" id="interview{{data.to.id}}" role="tabpanel">
                                         <div class="p-t-15">
                                            <div class="message-box">
                                             <div id="container"
-					                        style="
-					                        backgroundColor:#f4f4f9;
-					                        width: 80%;
-					                        margin: auto;
-					                        padding: 20px;
-					                        backgroundColor:#ffffff;
-					                        boxShadow:0 4px 8px rgba(0, 0, 0, 0.1);
-					                        borderRadius:8px;
-					                        " 
-					                        >
+              					                        style="
+              					                        backgroundColor:#f4f4f9;
+              					                        width: 80%;
+              					                        margin: auto;
+              					                        padding: 20px;
+              					                        backgroundColor:#ffffff;
+              					                        boxShadow:0 4px 8px rgba(0, 0, 0, 0.1);
+              					                        borderRadius:8px;
+              					                        " 
+					                                     >
 					                            <h1>Panggilan Interview</h1>
 					                            <br>
 					                            <p>Halo <b>[Nama Kandidat]</b>,</p><br>
@@ -134,6 +141,12 @@
                                     </div>
                                 </div>
                             </div>
+                            
+
+
+                        </div>
+                            {% endfor %}
+                            
                             {% else %}
                             <div class="card-body">
                                 <h4 class="card-title">
@@ -145,8 +158,6 @@
                                 </div>
                             </div>
                             {% endif %}
-
-                        </div>
                     </div>
                 </div>
             </div>

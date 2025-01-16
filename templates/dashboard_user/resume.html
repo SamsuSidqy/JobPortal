@@ -173,12 +173,14 @@
                                                 {% endif %}
                                                 <input accept="application/pdf" placeholder="*pdf" 
                                                 name="{{form.files_cv.name}}" type="file" class="form-control" id="val-currency"  placeholder="$21.60">
+                                                {% if profile.file_cv %}    
                                                 <span><a 
-                                                     target="_blank" 
+                                                target="_blank" 
                                                 href="{% url 'pelamar:cv_pelamar' file=profile.file_cv %}"
-                                                    href="#" class="text-primary">Open File &nbsp;</a>
+                                                class="text-primary">Open File &nbsp;</a>
                                                 ({{profile.file_cv}})   
                                                 </span>
+                                                {% endif %}
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -234,19 +236,22 @@
                                             const inputs = document.getElementById('tags');
                                             let datadefaults = tagsValues.value.split(",")
                                             let str = ''
-                                            datadefaults.forEach(e => {
-                                                str += `
-                                                    <span data=${e} id="skils${e}" style="display: inline-flex; align-items: center; background: rgb(0, 173, 255); color: white; padding: 5px; border-radius: 3px; margin-right: 5px;">${e}
-                                                        <span
-                                                        style="margin-left: 10px;cursor:pointer;"
-                                                        onclick="deleteSkils('${e}')"
-                                                        >
-                                                            X
+                                            console.log(datadefaults)
+                                            if (datadefaults.length > 1) {
+                                                datadefaults.forEach(e => {
+                                                    str += `
+                                                        <span data=${e} id="skils${e}" style="display: inline-flex; align-items: center; background: rgb(0, 173, 255); color: white; padding: 5px; border-radius: 3px; margin-right: 5px;">${e}
+                                                            <span
+                                                            style="margin-left: 10px;cursor:pointer;"
+                                                            onclick="deleteSkils('${e}')"
+                                                            >
+                                                                X
+                                                            </span>
                                                         </span>
-                                                    </span>
-                                                `
-                                                tagsWrapper.innerHTML = str
-                                            })
+                                                    `
+                                                    tagsWrapper.innerHTML = str
+                                                })
+                                            }
 
                                             inputs.addEventListener('keydown', function (e) {
                                                 if (e.key === 'Enter' && inputs.value.trim() !== '') {
