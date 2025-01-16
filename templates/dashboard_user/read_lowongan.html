@@ -54,24 +54,37 @@
                                         >{% csrf_token %}
                                             {% if request.user|checkResume %}
 
-                                            {% if request.user|checkApply:detail %}
-                                             <div class="alert alert-info">
-                                                Anda Sudah Mengirim Lamaran Ini
-                                            </div>
+                                                {% if request.user|checkApply:detail %}
+                                                 <div class="alert alert-info">
+                                                    Anda Sudah Mengirim Lamaran Ini
+                                                </div>
+                                                {% else %}
+
+                                                    {% if detail.is_apply %}
+
+                                                        {% if detail.id|checkMaxApply%}
+                                                        <div class="alert alert-info">
+                                                        Lamaran Sudah Melebihi Batas
+                                                        </div> 
+                                                        {% else %}
+                                                        <input type="hidden" value="{{detail.id}}" name="lowongan">
+                                                        <button class="btn btn-outline-secondary sweet-confirm">Apply Lamaran</button>
+                                                        {% endif %}
+                                                    {% else %}        
+                                                    <button class="btn btn-outline-secondary sweet-confirm">Apply Lamaran</button>
+                                                    {% endif %}
+
+                                                {% endif %}
+
                                             {% else %}
-
-                                            <input type="hidden" value="{{detail.id}}" name="lowongan">
-                                            <button class="btn btn-outline-secondary sweet-confirm">Apply Lamaran</button>
-
-                                            {% endif %}
-
-                                            {% else %}
-                                            <div class="alert alert-danger">
-                                                Lengkapi Resume Terlebih Dahulu
-                                            </div>                                            
+                                                <div class="alert alert-danger">
+                                                    Lengkapi Resume Terlebih Dahulu
+                                                </div>                                            
                                             {% endif %}
                                             <!-- <button class="btn mb-1 btn-outline-secondary">Kirim Lamaran</button> -->
                                         </form>   
+                                        <small>Last Updated 
+                                        <b>{{detail.updated_at | date:'U' | timedDates}}</b> Yang Lalu</small>
                                         </div>
                                     </div>
                                 <script>

@@ -18,6 +18,7 @@ class CheckReadFileCVRequiredMixins:
 		if user.id == req.user.id:
 			return super().dispatch(req,*args,**kwargs)
 		else:
+			print(req.user.is_admin)
 			raise Http404("Halaman Tidak Ditemukan")
 
 class CheckReadFilePhotoRequiredMixins:
@@ -26,7 +27,7 @@ class CheckReadFilePhotoRequiredMixins:
 		user = get_object_or_404(Pengguna,photo_formal=file)
 		print(user.id)
 		print(req.user.id)
-		if user.id == req.user.id:
+		if user.id == req.user.id or req.user.is_admin:
 			return super().dispatch(req,*args,**kwargs)
 		else:
 			raise Http404("Halaman Tidak Ditemukan")

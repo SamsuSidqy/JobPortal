@@ -1,5 +1,5 @@
 from django import template
-from db.models import ApplyLowongan
+from db.models import ApplyLowongan,Lowongan
 import datetime
 register = template.Library()
 
@@ -64,3 +64,61 @@ def checkApply(user,lowongan):
 	except Exception as e:
 		print("Error Templates Check Apply ",e)
 		return False
+
+
+@register.filter
+def checkMaxApply(idLowongan):
+	instance = Lowongan.objects.get(id=idLowongan)
+	types = False
+
+	if instance.is_apply:
+		instances = ApplyLowongan.objects.filter(to=instance)
+		if instances.count() == instance.max_apply:
+			types = True
+		else:
+			types = False
+	else:
+		types = False
+	return types
+
+
+@register.filter
+def countApply(idLowongan):
+	instance = Lowongan.objects.get(id=idLowongan)
+	instances = ApplyLowongan.objects.filter(to=instance)
+	return instances.count()
+
+@register.filter
+def persentaseApply(total,jumlah):
+	persentase = int(total) / int(jumlah) * 100
+	return round(persentase)
+
+
+@register.filter
+def timedDates(date):
+	try:
+		date = datetime.datetime.fromtimestamp(int(date))
+		now = datetime.datetime.now()
+		print(date)
+		selisih = now - date
+		types = None
+
+		sec = selisih.total_seconds()
+		menit = sec / 60
+		jam = menit / 60
+		hari = jam / 24
+		tahun = hari / 365.25
+
+		if round(menit) <= 24:
+			return f"{round(menit)} Menit"
+		elif round(jam) <=24:
+			return f"{round(jam)} Jam"
+		elif round(hari) <= 365:
+			return f"{round(hari)} Hari"
+		else:
+			return f"{round(tahun)} Tahun"
+
+
+	except Exception as e:
+		print(e)
+		return f"0 Menit"

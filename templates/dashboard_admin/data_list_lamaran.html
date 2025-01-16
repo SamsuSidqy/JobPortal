@@ -36,17 +36,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for data in applylowongan %}
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
+                                                <td>{{data.user.complete_name}}</td>
+                                                <td>
+                                                    <a href="">{{data.to.title}}</a>
+                                                </td>
                                                 <td>60</td>
                                                 <td>
-                                                    <a href="#">
+                                                    <a href="{% url 'pelamar:cv_pelamar' file=data.user.file_cv %}">
                                                         <i class="ti-eye">&nbsp; Lihat</i>
                                                     </a> 
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'admins:admin_profile_pelamar' data='aa' %}"><i class="ti-eye">&nbsp; Lihat</i></a>  
+                                                    <a href="{% url 'admins:admin_profile_pelamar' slug=data.user.unique_token %}"><i class="ti-eye">&nbsp; Lihat</i></a>  
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group">
@@ -58,6 +61,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                            {% endfor %}
                                         </tbody>
                                         <tfoot>
                                             <tr>

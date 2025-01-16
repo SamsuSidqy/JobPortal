@@ -21,9 +21,22 @@ class ControllerReadLowonganPage(LoginRequiredMixin,UserGroupRequiredMixins,Temp
 
 	def post(self,req,*args,**kwargs):
 		idLowongan = req.POST.get("lowongan")
-		applyLowongan = ApplyLowongan.objects.create(
-			to=Lowongan.objects.get(id=idLowongan),
-			user=Pengguna.objects.get(id=req.user.id)
+		lowongan = Lowongan.objects.get(id=idLowongan)
+		user = Pengguna.objects.get(id=req.user.id)
+
+		if lowongan.is_apply:
+			instance = ApplyLowongan.objects.filter(to=lowongan).count()
+			if instance == lowongan.max_apply:
+				pass
+			else:				
+				applyLowongan = ApplyLowongan.objects.create(
+					to=lowongan,
+					user=user
+				)
+		else:
+			applyLowongan = ApplyLowongan.objects.create(
+					to=lowongan,
+					user=user
 			)
-		print(applyLowongan)
+		
 		return redirect("pelamar:pelamar_lowongan")

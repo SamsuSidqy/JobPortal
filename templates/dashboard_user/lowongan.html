@@ -26,26 +26,54 @@
                             {% for data in lowongan %}
                             <div class="col-lg-6">
                                 <div class="card border-warning">
-                                    <div class="card-header"><i class="ti-infinite">&nbsp; {{data.category.name}}</i></div>
+                                    <div class="card-header"><i class="ti-infinite">&nbsp; {{data.category.name}}</i> &nbsp;&nbsp;
+                                        {% if data.is_apply %}
+                                        <span class="badge badge-info">Lamaran Terbatas</span>
+                                        {% endif %}
+                                    </div>
                                     <div class="card-body">
                                         <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" >
                                             <h5 class="card-title">{{data.title}}</h5>
                                         </a>
+                                        <!-- {{data.id | checkMaxApply}} -->
                                         <br>
                                         {% if data.is_salary %}
-                                        <p><b>Rp.</b> 25.000.000 / Month</p>
-                                        {% else %}
                                         <p><b>Gaji Tidak Di Tampilkan</b></p>
-                                        {% endif %}
-                                        {% if request.user|checkApply:data %}
-                                            <button disabled class="btn btn-info">
-                                                Anda Sudah Mengirim Lamaran Ini
-                                            </button>
                                         {% else %}
-                                        <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-success">Apply</a>
+                                        <p><b>Rp.</b> {{data.salary | rupiah}}/ Month</p>
                                         {% endif %}
+
+                                        {% if request.user|checkResume %}
+
+                                            {% if request.user|checkApply:data %}
+                                                <button disabled class="btn btn-info">
+                                                    Anda Sudah Mengirim Lamaran Ini
+                                                </button>
+                                            {% else %}
+
+                                                {% if data.is_apply %}
+
+                                                    {% if data.id|checkMaxApply%}
+                                                    <button disabled class="btn btn-info">
+                                                        Mohon Maaf Lamaran Ini Sudah Melebihi Batas
+                                                    </button>
+                                                    {% else %}
+                                                    <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-success">Apply</a>
+                                                    {% endif %}
+                                                {% else %}
+                                                <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-success">Apply</a>
+                                                {% endif %}
+
+
+                                            {% endif %}
+                                        {% else %}    
+                                        <button disabled class="btn btn-info">
+                                            Lengkapi Resume Terlebih Dahulu
+                                        </button>
+                                        {% endif %}                                            
                                     </div>
-                                    <div class="card-footer"><small>Last updateed 3 min ago</small>
+                                    <div class="card-footer"><small>Last Updated 
+                                        <b>{{data.updated_at | date:'U' | timedDates}}</b> Yang Lalu</small>
                                     </div>
                                 </div>
                             </div>

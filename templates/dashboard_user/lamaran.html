@@ -41,8 +41,10 @@
                                     </li>
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#lowongan{{data.to.id}}"><span><i class="ti-archive"></i>&nbsp;&nbsp; Data Lowongan</span></a>
                                     </li>
+                                    {% if data.accept %}
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#interview{{data.to.id}}"><span><i class="ti-archive"></i>&nbsp;&nbsp; Jadwal Interview</span></a>
                                     </li>
+                                    {% endif %}
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content tabcontent-border" >
