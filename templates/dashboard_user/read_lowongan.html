@@ -70,7 +70,8 @@
                                                         <input type="hidden" value="{{detail.id}}" name="lowongan">
                                                         <button class="btn btn-outline-secondary sweet-confirm">Apply Lamaran</button>
                                                         {% endif %}
-                                                    {% else %}        
+                                                    {% else %}
+                                                    <input name="lowongan" type="hidden" value="{{detail.id}}">  
                                                     <button class="btn btn-outline-secondary sweet-confirm">Apply Lamaran</button>
                                                     {% endif %}
 

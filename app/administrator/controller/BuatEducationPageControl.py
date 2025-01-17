@@ -8,7 +8,7 @@ from administrator.unit.form.EducationForm import FormEducation
 
 # Model
 from db.models import DisabeldForm
-from db.models import Education
+from db.models import Education, ApplyLowongan
 class ControllerBuatEducationPage(LoginRequiredMixin,AdminGroupRequiredMixins,TemplateView):
 	redirect_field_name = None
 	login_url = 'home:login_halaman'

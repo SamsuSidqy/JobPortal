@@ -21,6 +21,7 @@ class ControllerBuatKategoriPage(LoginRequiredMixin,AdminGroupRequiredMixins,Tem
 		
 		self.context['disabled'] = checkDisabled.kategori
 		self.context['kategori'] = KategoriLowongan.objects.all()
+		
 		return render(req,self.template_name,self.context)
 
 	def post(self,req,*args,**kwargs):

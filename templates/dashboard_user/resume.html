@@ -237,8 +237,8 @@
                                             let datadefaults = tagsValues.value.split(",")
                                             let str = ''
                                             console.log(datadefaults)
-                                            if (datadefaults.length > 1) {
-                                                datadefaults.forEach(e => {
+                                            datadefaults.forEach(e => {
+                                                if(e){
                                                     str += `
                                                         <span data=${e} id="skils${e}" style="display: inline-flex; align-items: center; background: rgb(0, 173, 255); color: white; padding: 5px; border-radius: 3px; margin-right: 5px;">${e}
                                                             <span
@@ -250,8 +250,8 @@
                                                         </span>
                                                     `
                                                     tagsWrapper.innerHTML = str
-                                                })
-                                            }
+                                                }
+                                            })
 
                                             inputs.addEventListener('keydown', function (e) {
                                                 if (e.key === 'Enter' && inputs.value.trim() !== '') {

@@ -61,8 +61,15 @@
                                                     <div class="btn-group" role="group">
                                                         <button type="button" class="btn mb-1 btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                                                         <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 37px, 0px);">
-                                                            <a class="dropdown-item" href="#int">Interview</a> 
-                                                            <a class="dropdown-item" href="#tolak">Tolak</a>
+                                                            <form action="" method="POST">{% csrf_token %}
+                                                                <input type="hidden" name="slug"
+                                                                value="{{data.unique_token}}" 
+                                                                >
+                                                                <button type="submit" class="dropdown-item" value="True" name="3">
+                                                                Interview</button>
+                                                                <button type="submit" class="dropdown-item" value="True" name="4">
+                                                                Tolak</button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </td>

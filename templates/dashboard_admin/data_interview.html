@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load custom_filters %}
 {% include 'util/dashboard_admin/head.html' %}
 
      <!--**********************************
@@ -52,30 +52,33 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for data in interview %}
                                             <tr>
-                                                <td>Tiger Nixon</td>
-                                                <td>System Architect</td>
-                                                <td>60</td>
-                                                <td><a href=""><i class="ti-eye">&nbsp; Lihat</i></a> </td>
+                                                <td>{{data.user.complete_name}}</td>
+                                                <td>{{data.to.title}}</td>
+                                                <td>{{data.user.date_birth |date:'U'|hitungUmur}} Tahun</td>
                                                 <td>
-                                                    <a href=""><i class="ti-eye">&nbsp; Lihat</i></a>  
+                                                    <a 
+                                                    target="_blank" 
+                                                    href="{% url 'admins:cv_pelamar' file=data.user.file_cv %}">
+                                                        <i class="ti-eye">&nbsp; Lihat</i>
+                                                    </a> 
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Atur Jadwal</button>
+                                                    <a 
+                                                    target="_blank" 
+                                                    href="{% url 'admins:admin_profile_pelamar' slug=data.unique_token %}"><i class="ti-eye">&nbsp; Lihat</i></a>  
+                                                </td>
+                                                <td>
+                                                    <button 
+                                                    onclick="setModal('{{data.id}}')" 
+                                                    type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Atur Jadwal</button>
                                                     <!-- <a href=""><i class="ti-eye">&nbsp; Tahap Interview</i></a>  -->
                                                 </td>
                                             </tr>
+                                            {% endfor %}
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Umur</th>
-                                                <th>CV</th>
-                                                <th>Profile</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </tfoot>
+                                        
                                     </table>
                                 </div>
                             </div>
@@ -88,7 +91,7 @@
         <!--**********************************
             Content body end
         ***********************************-->
-        <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none; padding-right: 17px;">
+ <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: none; padding-right: 17px;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -96,48 +99,26 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
-                <form>
-                    <input type="date" class="form-control" ><br>
-                    <div class="form-control" style="height:250px;" id="editor">
-                        <div id="container"
-                        style="
-                        backgroundColor:#f4f4f9;
-                        width: 80%;
-                        margin: auto;
-                        padding: 20px;
-                        backgroundColor:#ffffff;
-                        boxShadow:0 4px 8px rgba(0, 0, 0, 0.1);
-                        borderRadius:8px;
-                        " 
-                        >
-                            <h1>Panggilan Interview</h1>
-                            <br>
-                            <p>Halo <b>[Nama Kandidat]</b>,</p><br>
+                <form id="forms" action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                    <label>Tanggal Interview</label>
+                    <input required name="date" type="date" class="form-control" ><br>
+                    <input type="hidden" id="idAply" name="idAply">
+                    <label>Files (Optional)</label>
+                    <input type="file" class="form-control" name="file" multiple><br>
 
-                            <p>Anda cocok dengan kualifikasi yang kami butuhan dan Kami senang mengundang Anda untuk mengikuti sesi interview dengan tim kami.</p>
-                            <p><strong>Detail Interview:</strong></p>
-                            <br>
-                            <ul>
-                                <li><strong>Tanggal:</strong> 12 Januari 2025</li>
-                                <li><strong>Waktu:</strong> 10:00 AM</li>
-                                <li><strong>Tempat:</strong> Kantor XYZ, Jl. Raya No. 123</li>
-                            </ul><br>
-                            <p>Harap membawa dokumen yang diperlukan dan persiapkan diri Anda sebaik mungkin.</p><br>
-                            <ul>
-                                <li><strong>KTP:</strong></li>
-                                <li><strong>Waktu:</strong></li>
-                                <li><strong>Tempat:</strong></li>
-                            </ul>
-                            <br>
-                            <p>Terima kasih, dan kami tunggu kehadiran Anda!</p>
-                            <button id="confirmButton">Konfirmasi Kehadiran</button>
+                    <input onclick="manualPesan()" type="checkbox" style="border: 1px solid black;" name="pesan"> &nbsp;&nbsp;Buat Pesan Manual <br>
+                    <input type="hidden" id="valueEditor">
+
+                    <div style="display: none;" id="manualPesan">
+                        <div class="form-control" style="height:250px;" id="editor">
+                            
                         </div>
                     </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <button type="submit" class="btn btn-primary">Send message</button>
+                </form>
             </div>
         </div>
     </div>
@@ -149,8 +130,7 @@ const quill = new Quill('#editor', {
     toolbar: [
       [{ header: [1, 2, 3,4,5,false] }],
       ['bold', 'italic', 'underline',],
-      ['link', 'video', 'formula'],
-      ['image', 'code-block','blockquote'],
+      ['blockquote'],
       [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
       [{ 'script': 'sub'}, { 'script': 'super' }],
       [{ 'indent': '-1'}, { 'indent': '+1' }],
@@ -162,7 +142,39 @@ const quill = new Quill('#editor', {
   },
   placeholder: 'Compose an epic...',
   theme: 'snow', // or 'bubble'
-});    
+});   
+
+
+
+
+
+const manualPesan = () =>{
+  let element = document.getElementById("manualPesan")
+  if (element.style.display == "none") {
+    element.style.display = "block"
+    document.getElementById("valueEditor").setAttribute("name","message")
+  }else if (element.style.display == "block") {
+    element.style.display = "none"
+    document.getElementById("valueEditor").setAttribute("name")
+  }
+}
+
+const setModal = (id) => {
+    console.log(id)
+    document.getElementById("idAply").value = id
+}
+
+let formss = document.getElementById("forms")
+
+formss.addEventListener("submit",e => {
+    e.preventDefault()
+    if(e.target.pesan.checked){
+        e.target.message.value = quill.root.innerHTML
+    }
+    formss.submit()
+})
+
+
 </script>
      
 {% include 'util/dashboard_admin/foot.html' %}

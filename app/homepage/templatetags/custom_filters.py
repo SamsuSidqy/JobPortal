@@ -138,3 +138,12 @@ def hitungUmur(tglLahir):
 	except Exception as e:
 		print(e)
 		return None
+
+@register.filter
+def countApplyLamaran(value):
+	try:
+		print(value)
+		return ApplyLowongan.objects.filter(status=1).count()	
+	except Exception as e:
+		return 0
+				

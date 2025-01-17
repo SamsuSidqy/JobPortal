@@ -156,6 +156,7 @@ class ApplyLowongan(models.Model):
 	status = models.IntegerField(default=1)
 	is_closed = models.BooleanField(default=False)
 	unique_token = models.TextField(default=uuid4())
+	date_interview = models.DateTimeField(blank=True,null=True)
 	accept = models.BooleanField(null=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 
