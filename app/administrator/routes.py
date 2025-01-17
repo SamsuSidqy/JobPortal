@@ -12,6 +12,7 @@ from administrator.controller.BuatLocationPageControl import ControllerBuatLocat
 from administrator.controller.BuatEducationPageControl import ControllerBuatEducationPage
 from administrator.controller.SettingsPageControl import ControllerSettingsPage
 from administrator.controller.BuatTipePageControl import ControllerBuatTipePage
+from administrator.controller.FileResponPageControl import ControllerReadCv, ControllerReadPhoto
 
 app_name = "admins"
 
@@ -28,4 +29,6 @@ urlpatterns = [
 	path('education/',ControllerBuatEducationPage.as_view(),name='admin_create_education'),
 	path('tipelowongan/',ControllerBuatTipePage.as_view(),name='admin_create_tipe'),
 	path('settings/',ControllerSettingsPage.as_view(),name='admin_settings'),
+	path("cv/<str:file>",ControllerReadCv.as_view(),name="cv_pelamar"),
+	path("photo/<str:file>",ControllerReadPhoto.as_view(),name='photo_pelamar'),
 ]

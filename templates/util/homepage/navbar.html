@@ -9,17 +9,40 @@
                                             <li><a href="{% url 'home:list_halaman' %}">Cari Lowongan </a></li>
                                             <li><a href="about.html">Tentang</a></li>                                            
                                             <li><a href="contact.html">Contact</a></li>
+                                            {% if request.user.is_authenticated %}
+                                                {% if request.user.is_admin %}
+                                                <li class="d-block d-lg-none">
+                                                    <a href="{% url 'admins:admin_index' %}">Dashboard</a>
+                                                </li>
+                                                {% else %}
+                                                 <li class="d-block d-lg-none">
+                                                    <a href="{% url 'pelamar:pelamar_apply' %}">Dashboard</a>
+                                                </li>
+                                                {% endif %}
+
+                                            {% else %}
                                             <li class="d-block d-lg-none">
                                                 <a href="{% url 'home:login_halaman' %}">Login / Register</a>
                                             </li>
+                                            {% endif %}
                                         </ul>
                                     </nav>
                                 </div>          
                                 <!-- Header-btn -->
+                                {% if request.user.is_authenticated %}
+                                <div class="header-btn d-none f-right d-lg-block">
+                                    {% if request.user.is_admin %}
+                                    <a href="{% url 'admins:admin_index' %}" class="btn">Dashboard</a>
+                                    {% else %}
+                                    <a href="{% url 'pelamar:pelamar_apply' %}" class="btn">Dashboard</a>
+                                    {% endif %}
+                                </div>
+                                {% else %}
                                 <div class="header-btn d-none f-right d-lg-block">
                                     <a href="{% url 'home:register_halaman' %}" class="btn head-btn1">Register</a>
                                     <a href="{% url 'home:login_halaman' %}" class="btn head-btn2">Login</a>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                         <!-- Mobile Menu -->

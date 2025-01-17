@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load custom_filters %}
 {% include 'util/dashboard_admin/head.html' %}
 
  <!--**********************************
@@ -40,16 +40,22 @@
                                             <tr>
                                                 <td>{{data.user.complete_name}}</td>
                                                 <td>
-                                                    <a href="">{{data.to.title}}</a>
+                                                    <a
+                                                    target="_blank" 
+                                                    href="{% url 'home:detail_halaman' slug=data.to.slug %}">{{data.to.title}}</a>
                                                 </td>
-                                                <td>60</td>
+                                                <td>{{data.user.date_birth |date:'U'|hitungUmur}} Tahun</td>
                                                 <td>
-                                                    <a href="{% url 'pelamar:cv_pelamar' file=data.user.file_cv %}">
+                                                    <a 
+                                                    target="_blank" 
+                                                    href="{% url 'admins:cv_pelamar' file=data.user.file_cv %}">
                                                         <i class="ti-eye">&nbsp; Lihat</i>
                                                     </a> 
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'admins:admin_profile_pelamar' slug=data.user.unique_token %}"><i class="ti-eye">&nbsp; Lihat</i></a>  
+                                                    <a 
+                                                    target="_blank" 
+                                                    href="{% url 'admins:admin_profile_pelamar' slug=data.unique_token %}"><i class="ti-eye">&nbsp; Lihat</i></a>  
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group">

@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load custom_filters %}
 {% include 'util/dashboard_admin/head.html' %}
 
  <!--**********************************
@@ -17,7 +17,7 @@
                                 <ul class="nav nav-tabs mb-3" role="tablist">
                                     <li class="nav-item"><a class="nav-link active show" data-toggle="tab" href="#profile8"><span><i class="ti-user"></i></span></a>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#home8"><span><i class="ti-home"></i></span></a>
+                                    <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#home8"><span><i class="ti-marker-alt"></i></span></a>
                                     </li>
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#messages8"><span><i class="ti-panel"></i></span></a>
                                     </li>
@@ -33,49 +33,55 @@
                                                             <div class="form-group row">
                                                                 <label class="col-sm-3 col-form-label">Email</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="email@example.com">
+                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="{{pengguna.user.email}}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-3 col-form-label">Nama Lengkap</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="email@example.com">
+                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="{{pengguna.user.complete_name}}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-3 col-form-label">Telepon</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="email@example.com">
+                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="{{pengguna.user.no_telp}}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="email@example.com">
+                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="{{pengguna.user.date_birth|date:'U'|inputDate}}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="email@example.com">
+                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="{{pengguna.user.last_education.name}}">
                                                                 </div>
                                                             </div>
                                                              <div class="form-group row">
                                                                 <label class="col-sm-3 col-form-label">Jurusan</label>
                                                                 <div class="col-sm-9">
-                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="email@example.com">
+                                                                    <input type="text" readonly="readonly" class="form-control-plaintext" value="{{pengguna.user.jurusan}}">
                                                                 </div>
                                                             </div>
                                                              <div class="form-group row">
                                                                 <label class="col-sm-3 col-form-label">CV</label>
                                                                 <div class="col-sm-9">
-                                                                   <a href=""><i class="ti-eye"></i></a>
+
+                                                                   <a
+                                                                   target="_blank"  
+                                                                   href="{% url 'admins:cv_pelamar' file=pengguna.user.file_cv %}"><i class="ti-eye"></i></a>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label class="col-sm-3 col-form-label">Foto Formal</label>
                                                                 <div class="col-sm-9">
-                                                                   <img width="150" src="https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png">
+                                                                   <img width="150"
+                                                                   style="cursor: pointer;" 
+                                                                    onclick="openLightbox(this)" 
+                                                                   src="{% url 'admins:photo_pelamar' file=pengguna.user.photo_formal %}">
                                                                 </div>
                                                             </div>
                                                         </form>
@@ -86,9 +92,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="home8" role="tabpanel">
                                         <div class="p-t-15">
-                                            <h4>This is icon title</h4>
-                                            <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor.</p>
-                                            <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor.</p>
+                                            {{pengguna.user.about | safe}}
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="messages8" role="tabpanel">
@@ -96,9 +100,8 @@
                                             <div class="card">
                                              <div class="card-body">
                                              <h4 class="card-title">Skills</h4>
-                                             <div class="bootstrap-label">
-                                                <a href="#" class="label label-secondary">Secondary</a> 
-                                                <a href="#" class="label label-secondary">Secondary</a> 
+                                             <div class="bootstrap-label" id="skil"> 
+                                                
                                             </div>
                                             </div>
                                         </div>
@@ -106,9 +109,26 @@
 
                                     </div>
                                 </div>
+                                {% if pengguna.status == 1 %}
                                 <!-- <span>* Sudah Dalam Tahap Interview</span> -->
-                                <button class="btn mb-1 btn-flat btn-info">Interview</button>
-                                <button class="btn mb-1 btn-flat btn-warning">Tolak</button>
+                                <form action="" method="POST">{% csrf_token %}
+                                    <button type="submit" value="True" name="2" class="btn mb-1 btn-flat btn-info">Interview</button>
+                                    <button type="submit" value="True" name="4" class="btn mb-1 btn-flat btn-warning">Tolak</button>
+                                </form>
+                                {% else %}
+                                    {% if pengguna.status == 2 or pengguna.status == 3 %}
+                                     <div class="alert alert-info">
+                                        Pelamar Sudah Masuk Tahap <b>Interview</b>
+                                        Cek Halaman Interview
+                                    </div> 
+                                    {% elif pengguna.status == 4 %}
+                                     <div class="alert alert-danger">
+                                        Lamaran Sudah Di <b>Tolak</b>
+                                    </div>
+                                    {% else %}
+                                    
+                                    {% endif %} 
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -119,5 +139,57 @@
         <!--**********************************
             Content body end
         ***********************************-->
-        
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()"
+style="
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.8);
+justify-content: center;
+align-items: center;
+z-index: 1000;
+" 
+>
+<span 
+style="
+position: absolute;
+top: 20px;
+right: 30px;
+color: white;
+font-size: 40px;
+cursor: pointer;
+" 
+class="close" onclick="closeLightbox()">X</span>
+        <img id="lightbox-img" src="" alt="Expanded Image">
+    </div>
+<script>
+function openLightbox(imgElement) {
+    var lightbox = document.getElementById("lightbox");
+    var lightboxImg = document.getElementById("lightbox-img");
+    
+    lightboxImg.src = imgElement.src;
+    lightbox.style.display = "flex";
+}
+
+function closeLightbox() {
+    var lightbox = document.getElementById("lightbox");
+    lightbox.style.display = "none";
+}
+ 
+let elementSkils = document.getElementById("skil")
+let skills = "{{pengguna.user.skills}}".split(",")
+let str  = ''
+
+skills.forEach(e => {
+    str += `
+    <a href="#" class="label label-secondary">${e}</a> 
+    `
+    elementSkils.innerHTML = str
+})
+
+</script>        
 {% include 'util/dashboard_admin/foot.html' %}

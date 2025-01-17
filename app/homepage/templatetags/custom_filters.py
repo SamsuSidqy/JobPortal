@@ -122,3 +122,19 @@ def timedDates(date):
 	except Exception as e:
 		print(e)
 		return f"0 Menit"
+
+@register.filter
+def hitungUmur(tglLahir):
+	try:
+		date = datetime.datetime.fromtimestamp(int(tglLahir))
+		today = datetime.datetime.now()
+		umur = today.year - date.year
+
+		if (today.month, today.day) < (date.month, date.day):
+			umur -=1
+
+		return umur
+
+	except Exception as e:
+		print(e)
+		return None

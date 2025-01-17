@@ -67,13 +67,21 @@
                                <h4>Job Overview</h4>
                            </div>
                           <ul>
-                              <li>{{detail.created_at}}<i class="fas fa-calendar"></i></li>
+                              <li>{{detail.updated_at |date:'U'|timedDates}} Yang Lalu<i class="fas fa-calendar"></i></li>
                               <li> {{detail.location.name}}<i class="fas fa-map-marker-alt"></i></li>
                                <li>{{detail.tipe.name}}<i class="fas fa-briefcase"> </i></li> 
                               <li>Rp. {{detail.salary | rupiah}}<i class="fas fa-dollar-sign"></i></li>
                           </ul>
+
                          <div class="apply-btn2">
-                            <a href="#" class="btn">Apply Now</a>
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.is_admin %}
+                                {% else %}
+                                <a href="{% url 'pelamar:pelamar_read_lowongan' slug=detail.slug %}" class="btn">Apply Now</a>
+                                {% endif %}
+                            {% else %}
+
+                            {% endif %}
                          </div>
                        </div>
                         <div class="post-details4  mb-50">

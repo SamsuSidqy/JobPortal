@@ -155,6 +155,7 @@ class ApplyLowongan(models.Model):
 	user = models.ForeignKey(Pengguna,on_delete=models.CASCADE,related_name='user_apply')
 	status = models.IntegerField(default=1)
 	is_closed = models.BooleanField(default=False)
+	unique_token = models.TextField(default=uuid4())
 	accept = models.BooleanField(null=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 

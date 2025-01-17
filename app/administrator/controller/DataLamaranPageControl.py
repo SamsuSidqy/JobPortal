@@ -11,5 +11,5 @@ class ControllerDataLamaranPage(LoginRequiredMixin,AdminGroupRequiredMixins,Temp
 	context = {}
 
 	def get(self,req,*args,**kwargs):
-		self.context['applylowongan'] = ApplyLowongan.objects.all()
+		self.context['applylowongan'] = ApplyLowongan.objects.filter(status=1)
 		return render(req,"dashboard_admin/data_list_lamaran.html",self.context)
