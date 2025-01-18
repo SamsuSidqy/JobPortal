@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.views.generic import TemplateView
 from administrator.unit.customMiddleware.mixins import AdminGroupRequiredMixins
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.contrib import messages
 from administrator.unit.form.LowonganForm import FormLowongan
 
 class ControllerBuatPage(LoginRequiredMixin,AdminGroupRequiredMixins,TemplateView):
@@ -21,6 +21,7 @@ class ControllerBuatPage(LoginRequiredMixin,AdminGroupRequiredMixins,TemplateVie
 
 		if form.is_valid():
 			form.save()
+			messages.success(req,"Lowongan Berhasil Di Publish")
 			return redirect("admins:admin_create")
 		else:
 			print(form.errors)

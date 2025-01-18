@@ -112,16 +112,14 @@ body {
 <body>
 <div class="login-page">
   <div class="form">
-    <form class="register-form">
-      <input type="text" placeholder="name"/>
-      <input type="password" placeholder="password"/>
-      <input type="text" placeholder="email address"/>
-      <button>create</button>
-      <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form>
-    <form class="login-form">
-      <input type="text" placeholder="Email"/>
-      <input type="password" placeholder="Password"/>
+    {% if messages %}
+    {% for message in messages %}
+      <span style="color:red;font-size: 15px;">* {{message}}</span>
+    {% endfor %}  
+    {% endif %}
+     <form style="margin-top:10px;" class="login-form" action="" method="POST">{% csrf_token %}
+      <input type="email" name="email" placeholder="Your Email"/>
+      <input type="password" name="password" placeholder="Your Password"/>
       <button>login</button>
       <p class="message">Not registered? <a href="{% url 'home:register_halaman' %}">Create an account</a></p>
     </form>

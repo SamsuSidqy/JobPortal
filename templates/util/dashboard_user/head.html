@@ -69,7 +69,7 @@
   </style>
 
 <body>
-{% if user.is_verify %}    
+{% if request.user.is_verify %}    
 {% else %}
 <div class="alert alert-danger">
     Email Anda Belum Terverivikasi
@@ -140,6 +140,7 @@
                             </a>
                             <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
                             <div class="dropdown-content-heading d-flex justify-content-between">
+                                <button type="button" class="btn mb-1 btn-outline-primary btn-sm">Baca Semua</button>
                                 {% if notif.count %}
                                 <span class="">{{notif.count}} Notifications</span>  
                                 {% else %}
@@ -149,9 +150,10 @@
                                 </div>
                                 <div class="dropdown-content-body">
                                     <ul>
+
                                         {%  for data in notif %}
                                         <li>
-                                            <a href="javascript:void()">
+                                            <a href="{% url 'pelamar:pelamar_apply' %}">
                                                 <span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>
                                                 <div class="notification-content">
                                                     <h6 class="notification-heading">{{data.subject}}</h6>
@@ -176,7 +178,19 @@
                             <div class="drop-down dropdown-profile   dropdown-menu">
                                 <div class="dropdown-content-body">
                                     <ul>
-                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li>
+                                            <form action="{% url 'pelamar:logout_pelamar' %}" method="POST">{% csrf_token %}
+                                            <button
+                                            style="
+                                            border:none;
+                                            cursor: pointer;
+                                            background: none;
+                                            "
+                                            >
+                                                <i class="icon-key"></i> <span>Logout</span>
+                                            </button>    
+                                            </form>
+                                            </li>                                            
                                     </ul>
                                 </div>
                             </div>
@@ -210,14 +224,6 @@
                      <li>
                         <a href="{% url 'pelamar:pelamar_resume' %}"  aria-expanded="false">
                             <i class="icon-user menu-icon"></i><span class="nav-text">Resume</span>
-                        </a>
-                    </li>
-                     <li>
-                        <a href="{% url 'pelamar:pelamar_notif' %}" aria-expanded="false">
-                            <i class="icon-bell menu-icon"></i><span class="nav-text">Notification</span>
-                            {% if notif.count %}
-                            <span style="color: #fff;" class="badge nav-text badge-pill badge-info">{{notif.count}}</span>
-                            {% endif %}
                         </a>
                     </li>
                     <li>

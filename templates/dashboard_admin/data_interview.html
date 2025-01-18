@@ -26,16 +26,7 @@
 
                                 <h4 class="card-title">Data Interview</h4>
                                 <span>                                
-                                <select id="inputState" class="form-control" >
-                                    <option class="bg-light" disabled selected="selected">
-                                    <i class="ti-filter">Jenis Lowongan</i>    
-                                    </option>
-                                    <option value="System Architect">
-                                        System Architect
-                                    </option>
-                                    <option value="Developer">Developer</option>
-                                    <option value="Manager">Manager</option>
-                                </select>    
+                               
                                 </span>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered zero-configuration">
@@ -69,14 +60,15 @@
                                                     target="_blank" 
                                                     href="{% url 'admins:admin_profile_pelamar' slug=data.unique_token %}"><i class="ti-eye">&nbsp; Lihat</i></a>  
                                                 </td>
-
-                                                {% if data.status == 3 %}
+                                                    {% if data.status == 3 %}
                                                     <span
                                                     id="messageInterview"
                                                     style="display: none;"
                                                     content='{{data.id|messageInterview|safe}}'
                                                     ></span>
+                                                    {% endif %}
                                                 <td>
+                                                    {% if data.status == 3 %}
                                                     <a href="javascript:void()" data-toggle="modal"
                                                     data-target="#tahapInterview" data-whatever="@mdo"
                                                     onclick="setModalInterview()" 

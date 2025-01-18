@@ -19,7 +19,7 @@ class ControllerResumePage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateVi
 		self.context['form'] = FormResume
 		self.context['profile'] = Pengguna.objects.get(id=req.user.id)
 		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user)
-		self.context['notif'] = Notification.objects.filter(accept_to=req.user)
+		self.context['notif'] = Notification.objects.filter(accept_to=req.user,readed=False)
 		return render(req,self.template_name,self.context)
 
 	def post(self,req,*args,**kwargs):
@@ -31,7 +31,10 @@ class ControllerResumePage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateVi
 			
 			instance = form.save(commit=False)
 			filePhoto = req.FILES.get('file_photo') 
-			fileCV = req.FILES.get('files_cv')
+			fileCV = req.FILES.get('files_cv')						
+			print(instance.email)
+			print(instances.email)
+			print(req.POST.get("email"))
 			if filePhoto:
 				print("Ada Photo")
 				instance.photo_formal = form.cleaned_data.get("file_photo")

@@ -187,10 +187,12 @@ let skills = "{{pengguna.user.skills}}".split(",")
 let str  = ''
 
 skills.forEach(e => {
-    str += `
+   if (e) {
+     str += `
     <a href="#" class="label label-secondary">${e}</a> 
     `
     elementSkils.innerHTML = str
+   }
 })
 
 </script>        

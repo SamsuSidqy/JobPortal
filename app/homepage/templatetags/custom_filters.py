@@ -1,5 +1,5 @@
 from django import template
-from db.models import ApplyLowongan,Lowongan,Notification
+from db.models import ApplyLowongan,Lowongan,Notification,AttachmentNotification
 import datetime
 register = template.Library()
 
@@ -160,3 +160,17 @@ def messageInterview(idd):
 		print(e)
 		message = "<b>Pesan Tidak Di Temukan</b>"
 		return message
+
+@register.filter
+def attachmentFiles(idd):
+	attach = None
+	try:
+		aply = ApplyLowongan.objects.get(id=idd)
+		notif = Notification.objects.get(aply=aply)
+		att = AttachmentNotification.objects.filter(notification=notif)
+		if att:
+			attach = att
+			return attach
+	except Exception as e:
+		print(e)
+	return attach		

@@ -103,6 +103,13 @@ class Pengguna(AbstractUser):
 	objects = UserManager()
 
 
+	def save(self,*args,**kwargs):
+		if self.id:
+			oldEmail = Pengguna.objects.get(pk=self.id)	
+			if oldEmail.email != self.email:
+				self.is_verify = False
+		super(Pengguna,self).save(*args,**kwargs)
+
 class Lowongan(models.Model):
 	title = models.CharField(max_length=255)
 	category = models.ForeignKey(KategoriLowongan,on_delete=models.CASCADE)
@@ -159,7 +166,7 @@ class ApplyLowongan(models.Model):
 	date_interview = models.DateTimeField(blank=True,null=True)
 	accept = models.BooleanField(null=True)
 	created_at = models.DateTimeField(auto_now_add=True)
-
+	updated_at = models.DateTimeField(auto_now=True)
 	class Meta:
 		permissions = [
 			('only_user',"Can Apply")

@@ -1,11 +1,13 @@
-from db.models import ApplyLowongan
+from db.models import ApplyLowongan, Lowongan
 
 
-def admin_context(request):
-	if request.user.is_authenticated:
+def admin_context(req):
+	if req.user.is_authenticated:
 		return{
-			"notifLowongan":ApplyLowongan.objects.filter(status=1) if request.user.is_admin else None,
-			"notifInterview":ApplyLowongan.objects.filter(status=2) if request.user.is_admin else None,
+			"notifLowongan":ApplyLowongan.objects.filter(status=1) if req.user.is_admin else None,
+			"rejectAply":ApplyLowongan.objects.filter(status=4) if req.user.is_admin else None,
+			"notifInterview":ApplyLowongan.objects.filter(status=2) | ApplyLowongan.objects.filter(status=3)if req.user.is_admin else None,
+			"lowonganCount" :Lowongan.objects.all() if req.user.is_admin else None			
 		}
 	else:
 		return{}
