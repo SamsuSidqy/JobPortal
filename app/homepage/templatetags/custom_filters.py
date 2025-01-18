@@ -1,5 +1,5 @@
 from django import template
-from db.models import ApplyLowongan,Lowongan
+from db.models import ApplyLowongan,Lowongan,Notification
 import datetime
 register = template.Library()
 
@@ -147,3 +147,16 @@ def countApplyLamaran(value):
 	except Exception as e:
 		return 0
 				
+@register.filter
+def messageInterview(idd):
+	message = None
+
+	try:
+		aply = ApplyLowongan.objects.get(id=idd)
+		notif = Notification.objects.get(aply=aply)
+		message = notif.message
+		return message
+	except Exception as e:
+		print(e)
+		message = "<b>Pesan Tidak Di Temukan</b>"
+		return message

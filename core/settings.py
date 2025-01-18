@@ -115,6 +115,7 @@ STATIC_URL = 'assets/'
 ROOT_MEDIA = BASE_DIR / 'assets/media/'
 CV_MEDIA = BASE_DIR / 'assets/cv/'
 PHOTO_FORMAT = BASE_DIR / 'assets/photo_format/'
+ATTACHMENTS_FILES = BASE_DIR / 'assets/attachments/'
 STATICFILES_DIRS = [
     BASE_DIR / "assets",
     "/var/www/static/",

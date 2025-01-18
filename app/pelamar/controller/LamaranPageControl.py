@@ -9,7 +9,7 @@ class ControllerLamaranPage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateV
 	redirect_field_name = None
 	login_url = 'home:login_halaman'
 	context = {}
-	def get(self,req,*args,**kwargs):
+	def get(self,req,*args,**kwargs):		
 		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user)
 		self.context['notif'] = Notification.objects.filter(accept_to=req.user)
 		return render(req,"dashboard_user/lamaran.html",self.context)

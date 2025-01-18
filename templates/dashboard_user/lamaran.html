@@ -41,7 +41,7 @@
                                     </li>
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#lowongan{{data.to.id}}"><span><i class="ti-archive"></i>&nbsp;&nbsp; Data Lowongan</span></a>
                                     </li>
-                                    {% if data.accept %}
+                                    {% if data.status == 3 %}
                                     <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#interview{{data.to.id}}"><span><i class="ti-archive"></i>&nbsp;&nbsp; Jadwal Interview</span></a>
                                     </li>
                                     {% endif %}
@@ -71,6 +71,7 @@
                                                     <i class="ti-angle-double-right"></i>
                                                     &nbsp;&nbsp;&nbsp;
                                                 </li>
+
                                               {% elif data.status == 3 %}  
                                               <li style="display: inline;">
                                                     <span class="label" style="background: grey; color:#fff;">Apply</span>  
@@ -106,38 +107,7 @@
                                     <div class="tab-pane fade" id="interview{{data.to.id}}" role="tabpanel">
                                         <div class="p-t-15">
                                            <div class="message-box">
-                                            <div id="container"
-              					                        style="
-              					                        backgroundColor:#f4f4f9;
-              					                        width: 80%;
-              					                        margin: auto;
-              					                        padding: 20px;
-              					                        backgroundColor:#ffffff;
-              					                        boxShadow:0 4px 8px rgba(0, 0, 0, 0.1);
-              					                        borderRadius:8px;
-              					                        " 
-					                                     >
-					                            <h1>Panggilan Interview</h1>
-					                            <br>
-					                            <p>Halo <b>[Nama Kandidat]</b>,</p><br>
-
-					                            <p>Anda cocok dengan kualifikasi yang kami butuhan dan Kami senang mengundang Anda untuk mengikuti sesi interview dengan tim kami.</p>
-					                            <p><strong>Detail Interview:</strong></p>
-					                            <br>
-					                            <ul>
-					                                <li><strong>Tanggal:</strong> 12 Januari 2025</li>
-					                                <li><strong>Waktu:</strong> 10:00 AM</li>
-					                                <li><strong>Tempat:</strong> Kantor XYZ, Jl. Raya No. 123</li>
-					                            </ul><br>
-					                            <p>Harap membawa dokumen yang diperlukan dan persiapkan diri Anda sebaik mungkin.</p>
-					                            <ul>
-					                                <li><strong>KTP:</strong></li>
-					                                <li><strong>Waktu:</strong></li>
-					                                <li><strong>Tempat:</strong></li>
-					                            </ul>
-					                            <br>
-					                            <p>Terima kasih, dan kami tunggu kehadiran Anda!</p>					                            
-					                        </div>
+                                            {{data.id|messageInterview|safe}}
                                             </div>
                                         </div>
                                     </div>

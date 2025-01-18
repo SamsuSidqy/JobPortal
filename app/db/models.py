@@ -166,12 +166,12 @@ class ApplyLowongan(models.Model):
 		]
 
 class Notification(models.Model):
-	readed = models.BooleanField(default=False)
-	send_form = models.ForeignKey(Pengguna,on_delete=models.CASCADE,related_name='send_from_notifications')
+	readed = models.BooleanField(default=False)	
+	aply = models.ForeignKey(ApplyLowongan,on_delete=models.CASCADE,related_name='applyment_to_notifications')
 	accept_to = models.ForeignKey(Pengguna,on_delete=models.CASCADE,related_name='accepted_to_notifications')
 	subject = models.TextField()
 	message = models.TextField()
-
+	created_at = models.DateTimeField(auto_now_add=True)
 	class Meta:
 		permissions = [
 			('only_admin',"Can Notif")
