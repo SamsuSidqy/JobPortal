@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group
 from homepage.unit.forms.forms import RegisterForm
 from django.contrib import messages
 from homepage.unit.customMiddleware.mixins import AnonymRequiredMixins
+from django.contrib.auth import authenticate, login
 import json
 
 class ControllerRegisPage(AnonymRequiredMixins,TemplateView):
@@ -22,6 +23,10 @@ class ControllerRegisPage(AnonymRequiredMixins,TemplateView):
 			user = form.save()
 			group = Group.objects.get(name="users")
 			user.groups.add(group)
-			return redirect("home:register_halaman")
+			login(req,user)
+			if user.is_admin:
+				return redirect("admins:admin_index")
+			else:
+				return redirect("pelamar:pelamar_apply")
 		else:								
 			return render(req,"homepage/register.html",{"form":form})

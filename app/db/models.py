@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from uuid import uuid4
 from django.utils.text import slugify
+from datetime import datetime,timedelta
+
 
 class DisabeldForm(models.Model):
 	education = models.BooleanField(default=False)
@@ -155,6 +157,7 @@ class ProfilePerusahaan(models.Model):
 class ActivationAccount(models.Model):
 	token = models.TextField()
 	user = models.OneToOneField(Pengguna,on_delete=models.CASCADE,primary_key=True)
+	expired_at = models.DateTimeField(default=datetime.now()+timedelta(hours=1))
 
 
 class ApplyLowongan(models.Model):

@@ -7,6 +7,7 @@ from pelamar.controller.ReadLowonganPageControl import ControllerReadLowonganPag
 from pelamar.controller.LogoutPageControl import LogoutUserController
 from pelamar.controller.ReadFoto import ReadFotoController
 from pelamar.controller.ReadCv import ReadCVController
+from pelamar.controller.VerifyPageControl import ControllerVerifyPage
 
 app_name = "pelamar"
 
@@ -18,4 +19,5 @@ urlpatterns = [
 	path("resume/photo/<str:file>",ReadFotoController.as_view(),name="photo_pelamar"),
 	path("resume/cv/<str:file>",ReadCVController.as_view(),name='cv_pelamar'),
 	path("logout/",LogoutUserController.as_view(),name="logout_pelamar"),
+	path("verify/",ControllerVerifyPage.as_view(),name='verify_pelamar'),
 ]

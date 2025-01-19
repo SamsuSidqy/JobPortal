@@ -71,10 +71,23 @@
 <body>
 {% if request.user.is_verify %}    
 {% else %}
-<div class="alert alert-danger">
-    Email Anda Belum Terverivikasi
-    <a href="#" class="alert-link">Here</a>. Klik Untuk Verifikasi Email
-</div>
+    <div class="alert alert-danger">
+        Email Anda Belum Terverivikasi
+        <form action="{% url 'pelamar:verify_pelamar' %}" method="POST">{%csrf_token%}
+        <button style=" border: none; background: none; cursor: pointer; font-weight: bold;"> Here </button>. Klik Untuk Verifikasi Email
+        </form> 
+    </div>
+{% endif %}
+{% if messages %}
+    {% for message in messages %}
+
+        {% if message == 'sukses' %}
+        <div class="alert alert-info">
+            Verifikasi Sudah Terkirim, Cek Di <strong>Inbox</strong> Atau <strong>Spam</strong> Email Anda
+        </div>
+        {% endif %}
+
+    {% endfor %}
 {% endif %}
 
     <!--*******************
