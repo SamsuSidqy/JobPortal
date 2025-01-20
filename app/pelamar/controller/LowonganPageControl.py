@@ -11,7 +11,7 @@ class ControllerLowonganPage(LoginRequiredMixin,UserGroupRequiredMixins,Template
 	login_url = 'home:login_halaman'
 	context = {}
 	def get(self,req,*args,**kwargs):
-		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user)
+		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user,is_closed=False)
 		self.context['notif'] = Notification.objects.filter(accept_to=req.user,readed=False)
-		self.context['lowongan'] = Lowongan.objects.all()
+		self.context['lowongan'] = Lowongan.objects.filter(is_close=False)
 		return render(req,"dashboard_user/lowongan.html",self.context)

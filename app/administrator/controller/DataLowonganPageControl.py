@@ -6,7 +6,7 @@ from administrator.unit.form.LowonganForm import FormLowongan
 from django.contrib import messages
 
 # Model
-from db.models import Lowongan
+from db.models import Lowongan,ApplyLowongan
 
 class ControllerDataLowonganPage(LoginRequiredMixin,AdminGroupRequiredMixins,TemplateView):
 	redirect_field_name = None
@@ -17,11 +17,20 @@ class ControllerDataLowonganPage(LoginRequiredMixin,AdminGroupRequiredMixins,Tem
 	}
 
 	def get(self,req,*args,**kwargs):
-		self.context['lowongan'] = Lowongan.objects.all()
+		self.context['lowongan'] = Lowongan.objects.filter(is_close=False)
 		return render(req,self.template_name,self.context)
 
 	def post(self,req,*args,**kwargs):
-		instance = Lowongan.objects.filter(id=req.POST.get("id")).first()
+		if req.POST.get("closed"):
+			instance = Lowongan.objects.filter(id=req.POST.get("closed"),is_close=False).first()
+			instance.is_close = True
+			instance.save()
+			ApplyLowongan.objects.filter(to=instance).update(is_closed=True)
+			messages.success(req,"Lowongan Telah Di Hapus")
+			return redirect("admins:admin_data_lowongan")
+
+
+		instance = Lowongan.objects.filter(id=req.POST.get("id"),is_close=False).first()
 		form = FormLowongan(req.POST,instance=instance)
 		
 		if form.is_valid():

@@ -14,7 +14,7 @@ class ControllerReadLowonganPage(LoginRequiredMixin,UserGroupRequiredMixins,Temp
 	def get(self,req,*args,**kwargs):
 		data = get_object_or_404(Lowongan,slug=kwargs.get("slug"))
 		self.context['detail'] = data
-		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user)
+		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user,is_close=False)
 		self.context['notif'] = Notification.objects.filter(accept_to=req.user,readed=False)
 		return render(req,"dashboard_user/read_lowongan.html",self.context)
 
@@ -22,6 +22,9 @@ class ControllerReadLowonganPage(LoginRequiredMixin,UserGroupRequiredMixins,Temp
 	def post(self,req,*args,**kwargs):
 		idLowongan = req.POST.get("lowongan")
 		lowongan = Lowongan.objects.get(id=idLowongan)
+		if lowongan.is_close:
+			return redirect("pelamar:pelamar_lowongan")
+
 		user = Pengguna.objects.get(id=req.user.id)
 
 		if lowongan.is_apply:

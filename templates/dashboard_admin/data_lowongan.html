@@ -25,9 +25,11 @@
                             <br>
                             <div class="card-body" style="display:none;" id="card-update">
                                 <h4 class="card-title">Upload Lowongan</h4>
+
                                 <div class="basic-form">
                                 
                                     <form id="forms" action="" method="POST">{% csrf_token %}
+
                                         <input type="hidden" name="id">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
@@ -125,6 +127,7 @@
                                         </div>
                                         <button type="submit" class="btn btn-dark">Update</button>
                                         <button type="button" onclick="canceUpdate()" class="btn btn-light">Cancel</button>
+
                                     </form>
                                     <br>
                                     
@@ -173,8 +176,14 @@
                                                 class="d-none"
                                                 id="data{{data.id}}"></span>
                                                 <td><span><a onclick="updateLoker('{{data.id}}')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Lowongan"><i class="fa fa-pencil color-muted m-r-5"></i> </a>
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Lowongan"><i class="fa fa-close color-muted m-r-5"></i> </a></span>
+                                                   
+                                                <form id="formClose" action="" method="POST">{% csrf_token %}
+                                                <input type="hidden" name="closed" value="{{data.id}}">
+                                                <a 
+                                                onclick="document.getElementById('formClose').submit()" 
+                                                href="javascript:void()" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Lowongan"><i class="fa fa-close color-muted m-r-5"></i> </a></span>
                                                 </td>
+                                                </form>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

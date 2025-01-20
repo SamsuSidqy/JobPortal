@@ -8,6 +8,6 @@ class ControllerHomePage(TemplateView):
 	
 	def get(self,req,*args,**kwargs):
 		self.context['kategori'] = KategoriLowongan.objects.all()
-		self.context['lowongan'] = Lowongan.objects.all()[0:5]
+		self.context['lowongan'] = Lowongan.objects.filter(is_close=False)[0:5]
 		return render(req,"homepage/index.html",self.context)
 

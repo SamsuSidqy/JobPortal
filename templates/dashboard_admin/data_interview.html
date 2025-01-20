@@ -44,6 +44,7 @@
                                         </thead>
                                         <tbody>
                                             {% for data in interview %}
+                                            {% if data.to.is_close is False %}
                                             <tr>
                                                 <td>{{data.user.complete_name}}</td>
                                                 <td>{{data.to.title}}</td>
@@ -62,16 +63,22 @@
                                                 </td>
                                                     {% if data.status == 3 %}
                                                     <span
-                                                    id="messageInterview"
+                                                    id="messageInterview{{data.id}}"
                                                     style="display: none;"
-                                                    content='{{data.id|messageInterview|safe}}'
-                                                    ></span>
+                                                    content='{{data.id|messageInterview|safe}}'     
+                                                    >
+                                                    {% for file in data.id|attachmentFiles %}
+                                                    <div 
+                                                    id="files{{data.id}}" 
+                                                    files="{{file.name_file}}"></div>
+                                                    {% endfor %}    
+                                                    </span>
                                                     {% endif %}
                                                 <td>
                                                     {% if data.status == 3 %}
                                                     <a href="javascript:void()" data-toggle="modal"
                                                     data-target="#tahapInterview" data-whatever="@mdo"
-                                                    onclick="setModalInterview()" 
+                                                    onclick="setModalInterview('{{data.id}}')" 
                                                     >
 
                                                         <i class="ti-eye">&nbsp; Tahap Interview</i>
@@ -85,6 +92,7 @@
                                                     
                                                 </td>
                                             </tr>
+                                            {% endif %}
                                             {% endfor %}
                                         </tbody>
                                         
@@ -147,8 +155,16 @@
                 <h5 class="modal-title" id="exampleModalLabel">Interview</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
-            <div class="modal-body" id="dataInterview">
-               
+            <div class="modal-body" >
+               <div id="dataInterview">
+                   
+               </div>
+               <div >
+                    <span><b>Attachments</b></span>
+                   <ul id="attachemntfile">
+                       
+                   </ul>
+               </div>
             </div>
         </div>
     </div>
@@ -206,10 +222,18 @@ formss.addEventListener("submit",e => {
 })
 
 
-const setModalInterview = () => {
-    let pesan = document.getElementById("messageInterview")
+const setModalInterview = (id) => {
+    let pesan = document.getElementById(`messageInterview${id}`)
     let text= pesan.getAttribute("content")
-    console.log(text)
+    let files = pesan.querySelectorAll(`#files${id}`)
+    let attach = document.getElementById("attachemntfile")
+    let str = ''
+    files.forEach(e => {
+        if (e) {
+            str += `<li><a href="${e.getAttribute(`files`)}">${e.getAttribute(`files`)}<a/></li>`
+            attach.innerHTML = str
+        }
+    }) 
     document.getElementById("dataInterview").innerHTML = text
 }
 

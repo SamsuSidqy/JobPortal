@@ -4,7 +4,7 @@
 def messageInterview(data,alamat,date):
 
 	defaultPesan = f""" 
-	<div id="container" style="backgroundcolor: #f4f4f9; width: 80%; margin: auto; padding: 20px; backgroundcolor: #ffffff; boxshadow: 0 4px 8px rgba(0, 0, 0, 0.1); borderradius: 8px;">
+	<div id="container" style="backgroundcolor: #f4f4f9; width: 100%; margin: auto; padding: 20px; backgroundcolor: #ffffff; boxshadow: 0 4px 8px rgba(0, 0, 0, 0.1); borderradius: 8px;">
 	<h1>Panggilan Interview</h1>
 	<br />
 	<p>Halo <b id="nameKandidat">{data.user.complete_name}</b>,</p>

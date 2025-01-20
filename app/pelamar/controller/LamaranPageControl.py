@@ -12,7 +12,7 @@ class ControllerLamaranPage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateV
 	login_url = 'home:login_halaman'
 	context = {}
 	def get(self,req,*args,**kwargs):		
-		aply = ApplyLowongan.objects.filter(user=req.user)
+		aply = ApplyLowongan.objects.filter(user=req.user,is_closed=False)
 		notif = Notification.objects.filter(accept_to=req.user,readed=False)
 		self.context['apply'] = aply
 		self.context['notif'] = notif
