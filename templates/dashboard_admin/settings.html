@@ -163,7 +163,11 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label"><b>Profile Perusahaan</b></label>
                                             <div class="col-sm-9">
-                                                <img src="https://i0.wp.com/picjumbo.com/wp-content/uploads/beautiful-fall-waterfall-free-image.jpeg?w=600&quality=80" style="margin-bottom: 10px; border-radius:10px;" width="150" height="150">
+                                                {% if profileP.images %}
+                                                <img src="{% url 'admins:file_perusahaan' file=profileP.images %}" style="margin-bottom: 10px; border-radius:10px;" width="160" height="150">
+                                                {% else %}
+                                                <img src="https://cdn-icons-png.flaticon.com/512/6733/6733337.png" style="margin-bottom: 10px; border-radius:10px;" width="160" height="150">
+                                                {% endif %}
                                                <input name="{{formProfile.file.name}}"  type="file" class="form-control">
                                                <input type="hidden" value="" name="{{formProfile.images.name}}">
                                             </div>

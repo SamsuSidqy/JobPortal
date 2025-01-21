@@ -159,6 +159,11 @@ class ActivationAccount(models.Model):
 	user = models.OneToOneField(Pengguna,on_delete=models.CASCADE,primary_key=True)
 	expired_at = models.DateTimeField(default=datetime.now()+timedelta(hours=1))
 
+class ChangeAccountPassword(models.Model):
+	token = models.TextField()
+	user = models.ForeignKey(Pengguna,on_delete=models.CASCADE,primary_key=True)
+	expired_at = models.DateTimeField(default=datetime.now()+timedelta(hours=1))
+
 
 class ApplyLowongan(models.Model):
 	to = models.ForeignKey(Lowongan,on_delete=models.CASCADE,related_name='data_lowongan')

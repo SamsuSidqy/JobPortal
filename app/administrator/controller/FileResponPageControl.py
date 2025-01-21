@@ -34,3 +34,15 @@ class ControllerReadPhoto(LoginRequiredMixin,AdminGroupRequiredMixins,TemplateVi
 		except Exception as e:
 			print(e)
 			raise Http404("Halaman Tidak Di Temukan")
+
+class ControllerReadFileCompany(LoginRequiredMixin,AdminGroupRequiredMixins,TemplateView):
+	def get(self,req,*args,**kwargs):
+		fileName = kwargs.get("file")
+		filePath = f"{settings.COMPANY_FILE}/{fileName}"
+		try:
+			response = FileResponse(open(filePath, "rb"))
+			return response
+			
+		except Exception as e:
+			print(e)
+			raise Http404("Halaman Tidak Di Temukan")

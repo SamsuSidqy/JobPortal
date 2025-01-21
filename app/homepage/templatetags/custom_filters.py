@@ -1,5 +1,5 @@
 from django import template
-from db.models import ApplyLowongan,Lowongan,Notification,AttachmentNotification
+from db.models import ApplyLowongan,Lowongan,Notification,AttachmentNotification,ChangeAccountPassword
 import datetime
 register = template.Library()
 
@@ -19,6 +19,8 @@ def rupiah(value):
 
 	except (ValueError,TypeError):
 		return 0
+
+
 
 
 @register.filter
@@ -174,3 +176,31 @@ def attachmentFiles(idd):
 	except Exception as e:
 		print(e)
 	return attach		
+
+
+@register.filter
+def tokenChangePassword(value):
+	info = False
+	try:
+		token = ChangeAccountPassword.objects.filter(token=value).first()
+		if token:
+			info = True
+		else:
+			info = False
+	except Exception as e:
+		print(e)
+		info = False
+
+	return info
+
+@register.filter
+def countKategori(value):
+	info = 0
+	try:
+		lowongan = Lowongan.objects.filter(category__id=value).count()
+		info = lowongan
+
+	except Exception as e:
+		info = 0
+
+	return info

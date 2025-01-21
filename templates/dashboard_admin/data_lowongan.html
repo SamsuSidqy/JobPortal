@@ -177,10 +177,10 @@
                                                 id="data{{data.id}}"></span>
                                                 <td><span><a onclick="updateLoker('{{data.id}}')" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit Lowongan"><i class="fa fa-pencil color-muted m-r-5"></i> </a>
                                                    
-                                                <form id="formClose" action="" method="POST">{% csrf_token %}
+                                                <form id="formClose{{data.id}}" action="" method="POST">{% csrf_token %}
                                                 <input type="hidden" name="closed" value="{{data.id}}">
                                                 <a 
-                                                onclick="document.getElementById('formClose').submit()" 
+                                                onclick="document.getElementById('formClose{{data.id}}').submit()" 
                                                 href="javascript:void()" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete Lowongan"><i class="fa fa-close color-muted m-r-5"></i> </a></span>
                                                 </td>
                                                 </form>

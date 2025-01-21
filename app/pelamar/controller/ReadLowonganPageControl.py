@@ -14,8 +14,8 @@ class ControllerReadLowonganPage(LoginRequiredMixin,UserGroupRequiredMixins,Temp
 	def get(self,req,*args,**kwargs):
 		data = get_object_or_404(Lowongan,slug=kwargs.get("slug"))
 		self.context['detail'] = data
-		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user,is_close=False)
-		self.context['notif'] = Notification.objects.filter(accept_to=req.user,readed=False)
+		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user,is_closed=False)
+		self.context['notif'] = Notification.objects.filter(accept_to=req.user,readed=False,aply__is_closed=False)
 		return render(req,"dashboard_user/read_lowongan.html",self.context)
 
 

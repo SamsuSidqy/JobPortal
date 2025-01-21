@@ -19,7 +19,7 @@ class ControllerResumePage(LoginRequiredMixin,UserGroupRequiredMixins,TemplateVi
 		self.context['form'] = FormResume
 		self.context['profile'] = Pengguna.objects.get(id=req.user.id)
 		self.context['apply'] = ApplyLowongan.objects.filter(user=req.user,is_closed=False)
-		self.context['notif'] = Notification.objects.filter(accept_to=req.user,readed=False)
+		self.context['notif'] = Notification.objects.filter(accept_to=req.user,readed=False,aply__is_closed=False)
 		return render(req,self.template_name,self.context)
 
 	def post(self,req,*args,**kwargs):

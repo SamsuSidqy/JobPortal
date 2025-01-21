@@ -1,91 +1,82 @@
-{% load static %}
-{% load custom_filters %}
+{% load static %} 
+{% load custom_filters %} 
 {% include 'util/dashboard_user/head.html' %}
 
-
-        <!--**********************************
+<!--**********************************
             Content body start
         ***********************************-->
-        <div class="content-body">
+<div class="content-body">
+    <div class="row page-titles mx-0">
+        <div class="col p-md-0">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Lowongan</a></li>
+            </ol>
+        </div>
+    </div>
+    <!-- row -->
 
-            <div class="row page-titles mx-0">
-                <div class="col p-md-0">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
-                    </ol>
+    <div class="container-fluid">
+        <div class="card">
+            <form method="GET">
+                <input name="s" type="search" class="form-control" placeholder="Search Lowongan" aria-label="Search Lowongan"
+                {% if request.GET.s %}
+                value="{{request.GET.s}}" 
+                {% endif %}
+                >
+            </form>
+        </div>
+        <div class="row m-b-30">
+            {% for data in lowongan %}
+            <div class="col-lg-6">
+                <div class="card border-warning">
+                    <div class="card-header">
+                        <i class="ti-infinite">&nbsp; {{data.category.name}}</i> &nbsp;&nbsp; {% if data.is_apply %}
+                        <span class="badge badge-info">Lamaran Terbatas</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}">
+                            <h5 class="card-title">{{data.title}}</h5>
+                        </a>
+                        <!-- {{data.id | checkMaxApply}} -->
+                        <br />
+                        {% if data.is_salary %}
+                        <p><b>Gaji Tidak Di Tampilkan</b></p>
+                        {% else %}
+                        <p><b>Rp.</b> {{data.salary | rupiah}}/ Month</p>
+                        {% endif %} {% if request.user|checkResume %} {% if request.user|checkApply:data %}
+                        <button disabled class="btn btn-info">
+                            Anda Sudah Mengirim Lamaran Ini
+                        </button>
+                        {% else %} {% if data.is_apply %} {% if data.id|checkMaxApply%}
+                        <button disabled class="btn btn-info">
+                            Mohon Maaf Lamaran Ini Sudah Melebihi Batas
+                        </button>
+                        {% else %}
+                        <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-success">Apply</a>
+                        {% endif %} {% else %}
+                        <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-success">Apply</a>
+                        {% endif %} {% endif %} {% else %}
+                        <button disabled class="btn btn-info">
+                            Lengkapi Resume Terlebih Dahulu
+                        </button>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer">
+                        <small>Last Updated <b>{{data.updated_at | date:'U' | timedDates}}</b> Yang Lalu</small>
+                    </div>
                 </div>
             </div>
-            <!-- row -->
-
-            <div class="container-fluid">
-                
-                <button type="button" class="btn btn-primary" style="margin-bottom: 10px;" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="ti-filter">&nbsp; Filter Lowongan</i></button>
-                  
-                  <div class="row m-b-30">  
-                            {% for data in lowongan %}
-                            <div class="col-lg-6">
-                                <div class="card border-warning">
-                                    <div class="card-header"><i class="ti-infinite">&nbsp; {{data.category.name}}</i> &nbsp;&nbsp;
-                                        {% if data.is_apply %}
-                                        <span class="badge badge-info">Lamaran Terbatas</span>
-                                        {% endif %}
-                                    </div>
-                                    <div class="card-body">
-                                        <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" >
-                                            <h5 class="card-title">{{data.title}}</h5>
-                                        </a>
-                                        <!-- {{data.id | checkMaxApply}} -->
-                                        <br>
-                                        {% if data.is_salary %}
-                                        <p><b>Gaji Tidak Di Tampilkan</b></p>
-                                        {% else %}
-                                        <p><b>Rp.</b> {{data.salary | rupiah}}/ Month</p>
-                                        {% endif %}
-
-                                        {% if request.user|checkResume %}
-
-                                            {% if request.user|checkApply:data %}
-                                                <button disabled class="btn btn-info">
-                                                    Anda Sudah Mengirim Lamaran Ini
-                                                </button>
-                                            {% else %}
-
-                                                {% if data.is_apply %}
-
-                                                    {% if data.id|checkMaxApply%}
-                                                    <button disabled class="btn btn-info">
-                                                        Mohon Maaf Lamaran Ini Sudah Melebihi Batas
-                                                    </button>
-                                                    {% else %}
-                                                    <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-success">Apply</a>
-                                                    {% endif %}
-                                                {% else %}
-                                                <a href="{% url 'pelamar:pelamar_read_lowongan' slug=data.slug %}" class="btn btn-success">Apply</a>
-                                                {% endif %}
-
-
-                                            {% endif %}
-                                        {% else %}    
-                                        <button disabled class="btn btn-info">
-                                            Lengkapi Resume Terlebih Dahulu
-                                        </button>
-                                        {% endif %}                                            
-                                    </div>
-                                    <div class="card-footer"><small>Last Updated 
-                                        <b>{{data.updated_at | date:'U' | timedDates}}</b> Yang Lalu</small>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                            
-
-                        </div>
-            </div>
-            <!-- #/ container -->
+            {% endfor %}
         </div>
-        <!--**********************************
+    </div>
+    <!-- #/ container -->
+</div>
+<!--**********************************
             Content body end
-        ***********************************-->
+***********************************-->
+
+
 
 {% include 'util/dashboard_user/foot.html' %}

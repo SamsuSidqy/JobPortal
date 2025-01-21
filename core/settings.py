@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'app.administrator',
     'app.db',
     'app.homepage',
@@ -42,7 +43,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.util.middleware.DisableCacheMiddleware',
 ]
+
 
 ROOT_URLCONF = 'core.urls'
 
@@ -116,6 +119,8 @@ ROOT_MEDIA = BASE_DIR / 'assets/media/'
 CV_MEDIA = BASE_DIR / 'assets/cv/'
 PHOTO_FORMAT = BASE_DIR / 'assets/photo_format/'
 ATTACHMENTS_FILES = BASE_DIR / 'assets/attachments/'
+COMPANY_FILE = BASE_DIR / 'assets/media/'
+
 STATICFILES_DIRS = [
     BASE_DIR / "assets",
     "/var/www/static/",
