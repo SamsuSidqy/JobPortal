@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import TemplateView
 from administrator.unit.customMiddleware.mixins import AdminGroupRequiredMixins
 from django.contrib.auth.mixins import LoginRequiredMixin
+from administrator.unit.mail.SendRejection import SendRejection
 
 from db.models import ApplyLowongan
 
@@ -24,6 +25,7 @@ class ControllerDataLamaranPage(LoginRequiredMixin,AdminGroupRequiredMixins,Temp
 			if tolak is not None:
 				aply.status = 4
 				aply.save()
+				mail = SendRejection(aply.user.complete_name,aply.user.email,aply.to.title)
 			elif interview is not None:
 				aply.status = 2
 				aply.save()

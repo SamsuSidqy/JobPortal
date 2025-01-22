@@ -4,7 +4,6 @@ from administrator.controller.IndexPageControl import ControllerIndexPage
 from administrator.controller.BuatPageControl import ControllerBuatPage
 from administrator.controller.DataLowonganPageControl import ControllerDataLowonganPage
 from administrator.controller.DataLamaranPageControl import ControllerDataLamaranPage
-from administrator.controller.DataListPelamarPageControl import ControllerDataListLamaranPage
 from administrator.controller.DataPelamarPageControl import ControllerDataPelamarPage
 from administrator.controller.DataInterviewPageControl import ControllerDataInterviewPage
 from administrator.controller.BuatKategoriPageControl import ControllerBuatKategoriPage
@@ -21,7 +20,6 @@ urlpatterns = [
 	path('createlowongan/',ControllerBuatPage.as_view(),name='admin_create'),
 	path('datalowongan/',ControllerDataLowonganPage.as_view(),name='admin_data_lowongan'),
 	path('datalamaran/',ControllerDataLamaranPage.as_view(),name='admin_data_lamaran'),
-	path('lamaran/<str:data>/',ControllerDataListLamaranPage.as_view(),name='admin_detail_lamaran_lowongan'),
 	path('profile/<str:slug>/',ControllerDataPelamarPage.as_view(),name='admin_profile_pelamar'),
 	path('iterview/',ControllerDataInterviewPage.as_view(),name='admin_data_interview'),
 	path('kategori/',ControllerBuatKategoriPage.as_view(),name='admin_create_kategori'),

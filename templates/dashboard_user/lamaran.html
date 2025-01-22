@@ -51,6 +51,11 @@
                                 <div class="tab-content tabcontent-border" >
                                     <div class="tab-pane  show active fade" id="lamaran{{data.to.id}}" role="tabpanel">
                                         <div class="p-t-15">
+                                            {% if data.status == 4 %}
+                                            <div class="external-event bg-info text-white ui-draggable ui-draggable-handle" data-class="bg-info" style="position: relative;"><i class="fa fa-move"></i><strong>
+                                             Mohon Maaf, Lamaran Kamu Belum Bisa Kami Process, Terima Kasih Atas Partisinya, Tetap Semangat   
+                                            </strong></div>
+                                            {% endif %}
                                             <ul>
                                               {% if data.status == 1 %}
                                                 <li style="display: inline;">
