@@ -13,7 +13,7 @@ from administrator.controller.BuatEducationPageControl import ControllerBuatEduc
 from administrator.controller.SettingsPageControl import ControllerSettingsPage
 from administrator.controller.BuatTipePageControl import ControllerBuatTipePage
 from administrator.controller.FileResponPageControl import ControllerReadCv, ControllerReadPhoto,ControllerReadFileCompany
-
+from administrator.controller.LogoutPageControl import ControllerLogoutPage
 app_name = "admins"
 
 urlpatterns = [
@@ -32,4 +32,5 @@ urlpatterns = [
 	path("cv/<str:file>",ControllerReadCv.as_view(),name="cv_pelamar"),
 	path("photo/<str:file>",ControllerReadPhoto.as_view(),name='photo_pelamar'),
 	path('file/<str:file>',ControllerReadFileCompany.as_view(),name='file_perusahaan'),
+	path('logout/',ControllerLogoutPage.as_view(),name='logout_admin'),
 ]

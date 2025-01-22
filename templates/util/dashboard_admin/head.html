@@ -125,12 +125,24 @@
                         <li class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="{% static 'admin/images/user/1.png' %}" height="40" width="40" alt="">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSteItzPyeDKBxyWiOA8xrPZXIlxOYv1b1VVg&s" height="40" width="40" alt="">
                             </div>
                             <div class="drop-down dropdown-profile   dropdown-menu">
                                 <div class="dropdown-content-body">
                                     <ul>    
-                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li>
+                                          <form action="{% url 'admins:logout_admin' %}" method="POST">{% csrf_token %}
+                                            <button
+                                            style="
+                                            border:none;
+                                            cursor: pointer;
+                                            background: none;
+                                            "
+                                            >
+                                                <i class="icon-key"></i> <span>Logout</span>
+                                            </button>    
+                                            </form>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

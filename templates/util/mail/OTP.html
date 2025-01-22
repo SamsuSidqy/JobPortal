@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email OTP</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px;">
+  <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <h2 style="color: #4CAF50; text-align: center;">Kode OTP Anda</h2>
+    <p style="font-size: 16px; color: #333333; line-height: 1.5;">
+      Hai <strong>{{name}}</strong>,<br><br>
+      Kami menerima permintaan untuk memverifikasi identitas Anda. Untuk melanjutkan, masukkan kode OTP berikut:
+    </p>
+    <div style="text-align: center; padding: 15px; background-color: #f1f1f1; border-radius: 5px; margin-top: 20px;">
+      <h3 style="font-size: 24px; font-weight: bold; color: #333333; margin: 0;">{{token}}</h3>
+    </div>
+    <p style="font-size: 16px; color: #333333; line-height: 1.5; margin-top: 20px;">
+      Kode OTP ini berlaku selama 1 Jam. Jangan bagikan kode ini kepada orang lain untuk menjaga keamanan akun Anda.
+    </p>
+    <p style="font-size: 16px; color: #333333; line-height: 1.5;">
+      Terima kasih,<br>
+      Tim Kami
+    </p>
+  </div>
+</body>
+</html>

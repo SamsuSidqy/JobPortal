@@ -47,7 +47,7 @@
                                                 {% else %}
                                                 <img style="cursor:pointer;" id="img_photo" height="150" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSteItzPyeDKBxyWiOA8xrPZXIlxOYv1b1VVg&s">
                                                 {% endif %}
-                                                <input
+                                                <input                                                
                                                 {% if profile.file_photo %}
                                                 value="{{profile.file_photo}}"
                                                 {% endif %} 
@@ -74,6 +74,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input
+                                                required
                                                 {% if profile.complete_name %}
                                                 value="{{profile.complete_name}}"
                                                 {% endif %}  
@@ -84,7 +85,8 @@
                                             <label class="col-lg-4 col-form-label" for="val-email">Email <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input 
+                                                <input
+                                                reqired 
                                                 {% if profile.email %}
                                                 value="{{profile.email}}"
                                                 {% endif %}
@@ -96,6 +98,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input 
+                                                required 
                                                 {% if profile.no_telp %}
                                                 value="{{profile.no_telp}}"
                                                 {% endif %}
@@ -115,7 +118,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input 
-
+                                                required 
                                                 value="{{profile.date_birth |date:'U' | inputDate}}" name="{{form.date_birth.name}}" type="date" class="form-control" id="val-password"  placeholder="Choose a safe one..">
                                             </div>
                                         </div>
@@ -123,7 +126,7 @@
                                             <label class="col-lg-4 col-form-label" for="val-confirm-password">Pendidikan Terakhir <span class="text-danger">*</span>
                                             </label>
                                               <div class="col-auto my-1">
-                                                <select name="{{form.last_education.name}}" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                                                <select required name="{{form.last_education.name}}" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                                                    <option value="" disabled selected>
                                                     Pilih Pendidikan Terakhir</option>
                                                     {% for id,name in form.last_education.field.choices %}
@@ -143,7 +146,8 @@
                                             <label class="col-lg-4 col-form-label" for="val-suggestions">Jurusan <span class="text-danger">*</span>
                                             </label>
                                             <div class="col-lg-6">
-                                                <input 
+                                                <input
+                                                required 
                                                 {% if profile.jurusan %}
                                                 value="{{profile.jurusan}}"
                                                 {% endif %}
@@ -156,6 +160,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input
+                                                required
                                                 {% if profile.about %}
                                                 value="{{profile.about}}"
                                                 {% endif %}
@@ -188,6 +193,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input
+                                                required
                                                 {% if profile.website %}
                                                 value="{{profile.website}}"
                                                 {% endif %}
@@ -199,6 +205,7 @@
                                             </label>
                                             <div class="col-lg-6">
                                                 <input 
+                                                required 
                                                 {% if profile.linkedln %}
                                                 value="{{profile.linkedln}}"
                                                 {% endif %}

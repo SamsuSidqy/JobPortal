@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from uuid import uuid4
 from django.utils.text import slugify
 from datetime import datetime,timedelta
-
+from django.contrib.auth.models import Group
 
 class DisabeldForm(models.Model):
 	education = models.BooleanField(default=False)
@@ -68,11 +68,14 @@ class UserManager(BaseUserManager):
 
 		email = self.normalize_email(email)
 		user = self.model(email=email, **extra_fields)
+		group = Group.objects.get(name='admin')
 		user.set_password(password)
 		user.save(using=self._db)
+		user.groups.add(group)
 		return user
 
 	def create_superuser(self,email,password,**extra_fields):
+		
 		extra_fields.setdefault('is_admin',True)
 		extra_fields.setdefault('is_staff', True)
 		extra_fields.setdefault('is_superuser', True)
@@ -161,9 +164,14 @@ class ActivationAccount(models.Model):
 
 class ChangeAccountPassword(models.Model):
 	token = models.TextField()
-	user = models.ForeignKey(Pengguna,on_delete=models.CASCADE,primary_key=True)
+	user = models.OneToOneField(Pengguna,on_delete=models.CASCADE,primary_key=True)
 	expired_at = models.DateTimeField(default=datetime.now()+timedelta(hours=1))
 
+class AccountAuthentication(models.Model):
+	kode = models.CharField(max_length=6,unique=True)
+	key = models.TextField()
+	user = models.OneToOneField(Pengguna,on_delete=models.CASCADE,primary_key=True)
+	expired_at = models.DateTimeField(default=datetime.now()+timedelta(hours=1))
 
 class ApplyLowongan(models.Model):
 	to = models.ForeignKey(Lowongan,on_delete=models.CASCADE,related_name='data_lowongan')

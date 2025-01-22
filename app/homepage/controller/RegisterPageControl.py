@@ -6,6 +6,9 @@ from django.contrib import messages
 from homepage.unit.customMiddleware.mixins import AnonymRequiredMixins
 from django.contrib.auth import authenticate, login
 import json
+from homepage.unit.mail.SendVerification import SendVerifivation
+from django.utils.crypto import get_random_string
+from db.models import ActivationAccount
 
 class ControllerRegisPage(AnonymRequiredMixins,TemplateView):
 	data = {
@@ -23,10 +26,11 @@ class ControllerRegisPage(AnonymRequiredMixins,TemplateView):
 			user = form.save()
 			group = Group.objects.get(name="users")
 			user.groups.add(group)
-			login(req,user)
-			if user.is_admin:
-				return redirect("admins:admin_index")
-			else:
-				return redirect("pelamar:pelamar_apply")
+			token = get_random_string(length=100)
+			activ = ActivationAccount.objects.create(user=user,token=token)
+			mail = SendVerifivation(user.email,token,user.email)
+			print(mail)
+			messages.info(req,"Akun Berhasil Di Buat, Cek Email Untuk Verifikasi")
+			return redirect("home:login_halaman")
 		else:								
 			return render(req,"homepage/register.html",{"form":form})

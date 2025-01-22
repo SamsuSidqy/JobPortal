@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman OTP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .otp-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .otp-input {
+            display: flex;
+            justify-content: space-between;
+            gap:5px;
+        }
+
+        .otp-input input {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .otp-input input:focus {
+            border-color: #4CAF50;
+        }
+
+        .otp-input input:disabled {
+            background-color: #f0f0f0;
+        }
+
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .resend {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .resend:hover {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="otp-container">
+        <h2>Masukkan Kode OTP</h2>
+        <p>Silakan masukkan kode OTP yang telah dikirimkan ke email atau nomor Anda.</p>
+        <form id="forms" action="{% url 'home:verify_otp' %}?key={{request.GET.key}}" method="POST">{% csrf_token %}
+        <div class="otp-input">
+            <input type="text" maxlength="1" id="otp1" oninput="moveFocus(otp1, otp2)">
+            <input type="text" maxlength="1" id="otp2" oninput="moveFocus(otp2, otp3)">
+            <input type="text" maxlength="1" id="otp3" oninput="moveFocus(otp3, otp4)">
+            <input type="text" maxlength="1" id="otp4" oninput="moveFocus(otp4, otp5)">
+            <input type="text" maxlength="1" id="otp5" oninput="moveFocus(otp5, otp6)">
+            <input type="text" maxlength="1" id="otp6" oninput="moveFocus(otp6, otp7)">
+            <input type="hidden" name="kodeotp" id="kodeotp">
+        </div>
+
+        <button type="button" class="btn" onclick="submitOTP()">Kirim</button>
+        </form>
+        
+    </div>
+
+    <script>
+        function moveFocus(current, next) {
+            if (current.value.length == current.maxLength) {
+                next.focus();
+            }
+        }
+
+        function submitOTP() {
+            let otp = '';
+            for (let i = 1; i <= 6; i++) {
+                otp += document.getElementById('otp' + i).value;
+            }
+            document.getElementById('kodeotp').value = otp
+            document.getElementById('forms').submit()
+        }
+
+        
+    </script>
+    
+</body>
+</html>
